@@ -33,11 +33,6 @@ if __name__ == "__main__":
     hardware.Display.write_display(["Ingredients: " + str(len(scripts.library.ingredients_dict)), "Recipes: " + str(len(scripts.library.recipes_list))])
 
     mixer = Mixer()
-    if len(scripts.library.recipes_list) > 0:
-        print mixer.mix_drink(scripts.library.recipes_list[0]), "Mix 1"
-        print mixer.mix_drink(scripts.library.recipes_list[0]), "Mix 2"
-        print mixer.mix_drink(scripts.library.recipes_list[0]), "Mix 3"
-        print mixer.mix_drink(scripts.library.recipes_list[0]), "Mix 4"
 
     print Diagnostic.separator_str
 
@@ -45,4 +40,6 @@ if __name__ == "__main__":
     print Diagnostic.discarded_recipe, "discarded recipes"
     print Diagnostic.discarded_ingredients, "discarded ingredients"
 
-    hardware.Valve_Master.Valve(12).open(100)
+    print mixer.mix_drink(scripts.library.recipes_list[0]), "Mix 1"
+    vc = hardware.Valve_Master.setup_valve_controller()
+    vc.open_valves(mixer.mix_drink(scripts.library.recipes_list[0]))
