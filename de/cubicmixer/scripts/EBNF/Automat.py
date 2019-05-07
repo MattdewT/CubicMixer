@@ -1,6 +1,6 @@
 from State import State
 from Transition import Transition
-from Diagnostic import InvalidSyntax
+from utility.Diagnostic import InvalidSyntax
 
 
 class Automat:

@@ -1,8 +1,8 @@
 import scripts
 import os
-import Diagnostic
+from utility import Diagnostic
 import hardware
-from Mixer import Mixer
+from utility.Mixer import Mixer
 
 if __name__ == "__main__":
 

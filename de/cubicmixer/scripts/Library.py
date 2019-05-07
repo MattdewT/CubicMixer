@@ -1,6 +1,6 @@
 import EBNF
-from Diagnostic import RecipeError
-import Diagnostic
+from utility.Diagnostic import RecipeError
+from utility import Diagnostic
 
 
 class Library:

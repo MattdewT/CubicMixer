@@ -2,10 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cf2c8e25-63aa-455c-82aa-00d2e0418b2c" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/tiroc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/de/cubicmixer/utility/UI.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/de/cubicmixer/utility/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/de/cubicmixer/hardware/Valve_Master.py" beforeDir="false" afterPath="$PROJECT_DIR$/de/cubicmixer/hardware/Valve_Master.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/de/cubicmixer/Diagnostic.py" beforeDir="false" afterPath="$PROJECT_DIR$/de/cubicmixer/utility/Diagnostic.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/de/cubicmixer/Mixer.py" beforeDir="false" afterPath="$PROJECT_DIR$/de/cubicmixer/utility/Mixer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/de/cubicmixer/hardware/Display.py" beforeDir="false" afterPath="$PROJECT_DIR$/de/cubicmixer/hardware/Display.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/de/cubicmixer/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/de/cubicmixer/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/de/cubicmixer/res/test.is" beforeDir="false" afterPath="$PROJECT_DIR$/de/cubicmixer/res/test.is" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/de/cubicmixer/scripts/EBNF/Automat.py" beforeDir="false" afterPath="$PROJECT_DIR$/de/cubicmixer/scripts/EBNF/Automat.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/de/cubicmixer/scripts/FileIO.py" beforeDir="false" afterPath="$PROJECT_DIR$/de/cubicmixer/scripts/FileIO.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/de/cubicmixer/scripts/Library.py" beforeDir="false" afterPath="$PROJECT_DIR$/de/cubicmixer/scripts/Library.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -47,7 +54,7 @@
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/de/cubicmixer/Diagnostic.py">
+        <entry file="file://$PROJECT_DIR$/de/cubicmixer/utility/Diagnostic.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="442">
               <caret line="26" column="32" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="32" />
@@ -56,10 +63,31 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/de/cubicmixer/scripts/EBNF/Automat.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="306">
+              <caret line="18" column="71" lean-forward="true" selection-start-line="18" selection-start-column="71" selection-end-line="18" selection-end-column="71" />
+              <folding>
+                <element signature="e#0#23#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/de/cubicmixer/utility/UI.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="408">
+              <caret line="24" column="29" lean-forward="true" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/de/cubicmixer/hardware/Display.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="119">
-              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
+            <state relative-caret-position="136">
+              <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
             </state>
           </provider>
         </entry>
@@ -97,11 +125,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/de/cubicmixer/scripts/Library.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
+            <state relative-caret-position="782">
+              <caret line="46" column="19" lean-forward="true" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -140,7 +168,7 @@
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="Valve" />
       </map>
     </option>
   </component>
@@ -155,7 +183,6 @@
         <option value="$PROJECT_DIR$/de/cubicmixer/Mixer.py" />
         <option value="$PROJECT_DIR$/de/cubicmixer/Diagnostic.py" />
         <option value="$PROJECT_DIR$/de/cubicmixer/scripts/__init__.py" />
-        <option value="$PROJECT_DIR$/de/cubicmixer/scripts/Library.py" />
         <option value="$PROJECT_DIR$/de/cubicmixer/scripts/EBNF/Automat.py" />
         <option value="$PROJECT_DIR$/de/cubicmixer/scripts/FileIO.py" />
         <option value="$PROJECT_DIR$/de/cubicmixer/res/second.txt" />
@@ -163,6 +190,8 @@
         <option value="$PROJECT_DIR$/de/cubicmixer/res/test.is" />
         <option value="$PROJECT_DIR$/de/cubicmixer/main.py" />
         <option value="$PROJECT_DIR$/de/cubicmixer/hardware/Valve_Master.py" />
+        <option value="$PROJECT_DIR$/de/cubicmixer/scripts/Library.py" />
+        <option value="$PROJECT_DIR$/de/cubicmixer/utility/UI.py" />
       </list>
     </option>
   </component>
@@ -225,6 +254,13 @@
               <item name="scripts" type="462c0819:PsiDirectoryNode" />
               <item name="EBNF" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="CubicMixer_2.0" type="b2602c69:ProjectViewProjectNode" />
+              <item name="CubicMixer_2.0" type="462c0819:PsiDirectoryNode" />
+              <item name="de" type="462c0819:PsiDirectoryNode" />
+              <item name="cubicmixer" type="462c0819:PsiDirectoryNode" />
+              <item name="utility" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
@@ -239,13 +275,14 @@
     <property name="settings.editor.selected.configurable" value="preferences.keymap" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="A:\Mathdew\Documents\PyCharmProjects\Conda\CubicMixer_2.0\de\cubicmixer" />
-    </key>
     <key name="CopyFile.RECENT_KEYS">
       <recent name="A:\Mathdew\Documents\PyCharmProjects\Conda\CubicMixer_2.0\de\cubicmixer" />
       <recent name="A:\Mathdew\Documents\PyCharmProjects\Conda\CubicMixer_2.0\de\cubicmixer\scripts" />
       <recent name="A:\Mathdew\Documents\PyCharmProjects\Conda\CubicMixer_2.0\de\cubicmixer\scripts\EBNF" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="A:\Mathdew\Documents\PyCharmProjects\Conda\CubicMixer_2.0\de\cubicmixer\utility" />
+      <recent name="A:\Mathdew\Documents\PyCharmProjects\Conda\CubicMixer_2.0\de\cubicmixer" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -344,21 +381,29 @@
       <option name="project" value="LOCAL" />
       <updated>1557257433814</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Valve Basic Support">
+      <created>1557266716979</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1557266716979</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="2576" height="1416" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
-      <window_info content_ui="combo" id="Project" order="1" visible="true" weight="0.11009539" />
+      <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.11009539" />
       <window_info id="Structure" order="2" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="0" />
       <window_info anchor="bottom" id="Event Log" order="1" side_tool="true" />
       <window_info anchor="bottom" id="Python Console" order="2" weight="0.32969603" />
       <window_info anchor="bottom" id="Message" order="3" />
       <window_info anchor="bottom" id="Find" order="4" weight="0.32969603" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="5" visible="true" weight="0.32969603" />
+      <window_info anchor="bottom" id="Version Control" order="5" visible="true" weight="0.32969603" />
       <window_info anchor="bottom" id="Run" order="6" weight="0.32969603" />
       <window_info anchor="bottom" id="Debug" order="7" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="8" weight="0.25" />
@@ -402,7 +447,8 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial Setup" />
     <MESSAGE value="Fixed Ingredient Script" />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed Ingredient Script" />
+    <MESSAGE value="Valve Basic Support" />
+    <option name="LAST_COMMIT_MESSAGE" value="Valve Basic Support" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/de/cubicmixer/scripts/EBNF/Library.py" />
@@ -439,7 +485,7 @@
       </provider>
     </entry>
     <entry file="file://$USER_HOME$/AppData/Local/Packages/Microsoft.MicrosoftEdge_8wekyb3d8bbwe/TempState/Downloads/saliens (1).py" />
-    <entry file="file://$PROJECT_DIR$/de/cubicmixer/Mixer.py">
+    <entry file="file://$PROJECT_DIR$/de/cubicmixer/utility/Mixer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
           <caret line="6" column="23" selection-start-line="6" selection-start-column="23" selection-end-line="6" selection-end-column="23" />
@@ -449,17 +495,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/de/cubicmixer/scripts/EBNF/Automat.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="306">
-          <caret line="20" column="39" selection-start-line="20" selection-start-column="39" selection-end-line="20" selection-end-column="39" />
-          <folding>
-            <element signature="e#0#23#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/de/cubicmixer/Diagnostic.py">
+    <entry file="file://$PROJECT_DIR$/de/cubicmixer/utility/Diagnostic.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="442">
           <caret line="26" column="32" selection-start-line="26" selection-start-column="24" selection-end-line="26" selection-end-column="32" />
@@ -493,24 +529,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/de/cubicmixer/scripts/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="17">
-          <caret line="1" column="78" selection-start-line="1" selection-start-column="60" selection-end-line="1" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/de/cubicmixer/res/test.is">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/de/cubicmixer/hardware/Display.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>
@@ -531,13 +553,44 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/de/cubicmixer/scripts/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="17">
+          <caret line="1" column="78" selection-start-line="1" selection-start-column="60" selection-end-line="1" selection-end-column="78" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/de/cubicmixer/scripts/Library.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="47" lean-forward="true" selection-start-line="47" selection-end-line="47" />
+        <state relative-caret-position="782">
+          <caret line="46" column="19" lean-forward="true" selection-start-line="46" selection-start-column="19" selection-end-line="46" selection-end-column="19" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/de/cubicmixer/hardware/Display.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="136">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/de/cubicmixer/scripts/EBNF/Automat.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="306">
+          <caret line="18" column="71" lean-forward="true" selection-start-line="18" selection-start-column="71" selection-end-line="18" selection-end-column="71" />
+          <folding>
+            <element signature="e#0#23#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/de/cubicmixer/utility/UI.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="408">
+          <caret line="24" column="29" lean-forward="true" selection-start-line="24" selection-start-column="29" selection-end-line="24" selection-end-column="29" />
         </state>
       </provider>
     </entry>

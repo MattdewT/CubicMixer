@@ -1,7 +1,7 @@
 import EBNF
 from Library import automat_scripts, library, Recipe
-from Diagnostic import FileError, InvalidSyntax, RecipeError
-import Diagnostic
+from utility.Diagnostic import FileError, InvalidSyntax, RecipeError
+from utility import Diagnostic
 
 is_list = []
 rs_list = []

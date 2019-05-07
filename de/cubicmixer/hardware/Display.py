@@ -1,4 +1,5 @@
-import Diagnostic
+from utility import Diagnostic
+
 
 # input [first_line (String), second_line(String)]
 def write_display(msg):        #ToDO proper checkign and structering
