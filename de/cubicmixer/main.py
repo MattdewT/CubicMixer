@@ -1,0 +1,48 @@
+import scripts
+import os
+import Diagnostic
+import hardware
+from Mixer import Mixer
+
+if __name__ == "__main__":
+
+    # --------------------------------- load and check scripts ------------------------------------
+
+    b = os.listdir(os.path.join(os.getcwd(), 'res'))
+    for s in b:
+        scripts.FileIO.load_script(os.path.join(os.getcwd(), 'res', s))
+
+    print Diagnostic.separator_str
+
+    # --------------------------------- parse ingredient scripts ------------------------------------
+
+    scripts.parse_ingredient_dict()
+    print Diagnostic.separator_str
+    print scripts.library.ingredients_dict
+    print Diagnostic.separator_str
+
+    # --------------------------------- parse recipe scripts ------------------------------------
+
+    scripts.parse_recipes_list()
+    print Diagnostic.separator_str
+    print scripts.library.recipes_list
+    print Diagnostic.separator_str
+
+    # --------------------------------- test n stuff ------------------------------------
+
+    hardware.Display.write_display(["Ingredients: " + str(len(scripts.library.ingredients_dict)), "Recipes: " + str(len(scripts.library.recipes_list))])
+
+    mixer = Mixer()
+    if len(scripts.library.recipes_list) > 0:
+        print mixer.mix_drink(scripts.library.recipes_list[0]), "Mix 1"
+        print mixer.mix_drink(scripts.library.recipes_list[0]), "Mix 2"
+        print mixer.mix_drink(scripts.library.recipes_list[0]), "Mix 3"
+        print mixer.mix_drink(scripts.library.recipes_list[0]), "Mix 4"
+
+    print Diagnostic.separator_str
+
+    print Diagnostic.unloaded_scripts, "unloaded scripts"
+    print Diagnostic.discarded_recipe, "discarded recipes"
+    print Diagnostic.discarded_ingredients, "discarded ingredients"
+
+    hardware.Valve_Master.Valve(12).open(100)
