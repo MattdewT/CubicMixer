@@ -4,3 +4,4 @@
 .idea/modules.xml
 .idea/misc.xml
 .idea/CubicMixer_2.0.iml
+*.pyc
