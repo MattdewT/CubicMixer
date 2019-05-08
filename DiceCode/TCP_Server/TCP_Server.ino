@@ -1,4 +1,4 @@
-#include <ESP8266WiFi.h>
+#include "ESP8266WiFi.h"
 #include <Wire.h>
 
 // MPU6050 Slave Device Address
@@ -26,26 +26,24 @@ const uint8_t MPU6050_REGISTER_ACCEL_XOUT_H =  0x3B;
 const uint8_t MPU6050_REGISTER_SIGNAL_PATH_RESET  = 0x68;
 
 int16_t AccelX, AccelY, AccelZ, Temperature, GyroX, GyroY, GyroZ;
-
-
-char* ssid = "DewNet";
+ 
+char* ssid = "DewNet+";
 char* password =  "dewdewdew";
+ 
+WiFiServer wifiServer(80);
+ 
+void setup() {
+ 
+  Serial.begin(115200);
+ 
+  delay(1000);
 
-uint16_t port = 8090;
-char * host = "192.168.137.1";
-
-WiFiClient _client;
-
-void setup()
-{
   ESP.wdtDisable();
   ESP.wdtFeed();
-  
-  Serial.begin(115200);
+
   Wire.begin(sda, scl);
   MPU6050_Init();
-
-
+  
   WiFi.disconnect(true);
   delay(1000);
   WiFi.softAPdisconnect(true);
@@ -55,40 +53,76 @@ void setup()
   
   WiFi.mode(WIFI_STA);
   WiFi.begin(ssid, password);
-  
+ 
   while (WiFi.status() != WL_CONNECTED) {
-    delay(500);
-    Serial.println(WiFi.status());
+    delay(1000);
+    Serial.println("Connecting..");
   }
-
-  Serial.print("WiFi connected with IP: ");
+ 
+  Serial.print("Connected to WiFi. IP:");
   Serial.println(WiFi.localIP());
-
-  _client =  WiFiClient();
-
+ 
+  wifiServer.begin();
 }
+ 
+void loop() {
+ 
+  WiFiClient client = wifiServer.available();
+ 
+  if (client) {
+ 
+    while (client.connected()) {
+ 
+      while (client.available()>0) {
+        char c = client.read();
+        Serial.write(c);
+      }
 
-void loop()
-{
-  if (!_client.connect(host, port)) {
+      double Ax, Ay, Az, T, Gx, Gy, Gz;
 
-    Serial.println("Connection to host failed");
+      Read_RawValue(MPU6050SlaveAddress, MPU6050_REGISTER_ACCEL_XOUT_H);
 
-    //delay(1000);
-    return;
+      //divide each with their sensitivity scale factor
+      Ax = (double)AccelX / AccelScaleFactor;
+      Ay = (double)AccelY / AccelScaleFactor;
+      Az = (double)AccelZ / AccelScaleFactor;
+      T = (double)Temperature / 340 + 36.53; //temperature formula
+      Gx = (double)GyroX / GyroScaleFactor;
+      Gy = (double)GyroY / GyroScaleFactor;
+      Gz = (double)GyroZ / GyroScaleFactor;
+
+      Serial.print("Ax: "); Serial.print(Ax);
+      Serial.print(" Ay: "); Serial.print(Ay);
+      Serial.print(" Az: "); Serial.println(Az);
+      
+      /*char msg[] = {Ax};
+
+      char c[10]; //becuase double is 8 bytes in GCC compiler but take 10 for safety 
+
+      sprintf(c , "%lf" , Ax);
+      client.write(c, sizeof(c));
+      
+      sprintf(c , "%lf" , Ay);
+      client.write(c, sizeof(c));
+      
+      sprintf(c , "%lf" , Az);
+      client.write(c, sizeof(c));*/
+
+      String msg = "Ax: " + (String)Ax + " Ay: " + (String)Ay + " Az: " + (String)Az;
+      const char* c_msg = msg.c_str();
+
+      client.write(c_msg);
+      
+      delay(200);
+    }
+ 
+    client.stop();
+    Serial.println("Client disconnected");
+ 
   }
-
-  Serial.println("Connected to server successful!");
-
-  send_mpu(_client);
-
-  Serial.println("Disconnecting...");
-  _client.stop();
-
-  delay(200);
 }
 
-void send_mpu(WiFiClient _c) {
+/**char read_mpu() {
   double Ax, Ay, Az, T, Gx, Gy, Gz;
 
   Read_RawValue(MPU6050SlaveAddress, MPU6050_REGISTER_ACCEL_XOUT_H);
@@ -106,8 +140,10 @@ void send_mpu(WiFiClient _c) {
   Serial.print(" Ay: "); Serial.print(Ay);
   Serial.print(" Az: "); Serial.println(Az);
 
-  _c.print("Ax: " + (String)Ax + " Ay: " + (String)Ay + " Az: " + (String)Az + " ");
-}
+  char msg[] = {"Ax: " + (String)Ax + " Ay: " + (String)Ay + " Az: " + (String)Az + '\n'};
+
+  return msg;
+}**/
 
 void I2C_Write(uint8_t deviceAddress, uint8_t regAddress, uint8_t data) {
   Wire.beginTransmission(deviceAddress);
