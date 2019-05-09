@@ -50,10 +50,7 @@ if __name__ == "__main__":
     print Diagnostic.separator_str
 
     TestUI = utility.UI.UserInterface()
-    print TestUI.UITree.current_node.msg
-    TestUI.UITree.descend(0)
-    print TestUI.UITree.current_node.msg
-    TestUI.UITree.descend(0)
-    print TestUI.UITree.current_node.msg
-    TestUI.UITree.descend(0)
-    print TestUI.UITree.current_node.msg
+
+    while True:
+        utility.UI.update(TestUI)
+        print TestUI.UITree.current_node.msg

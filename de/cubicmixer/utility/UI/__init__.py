@@ -1,2 +1,2 @@
 import Tree
-from UI import UserInterface
+from UI import UserInterface, update

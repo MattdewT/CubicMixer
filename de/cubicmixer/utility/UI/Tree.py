@@ -11,7 +11,8 @@ class Tree:
         self.current_node = self.current_node.get_children()[child_position]
 
     def ascend(self):
-        self.current_node = self.current_node.parent_node
+        if self.current_node.parent_node.msg != "Root":
+            self.current_node = self.current_node.parent_node
 
 
 class Node:
@@ -38,4 +39,7 @@ class LeafNode:
     def __init__(self, msg, return_value):
         self.msg = msg
         self.return_value = return_value
+
+    def get_children(self):
+        return self.return_value
 
