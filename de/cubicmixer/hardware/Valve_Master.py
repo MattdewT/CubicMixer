@@ -13,7 +13,6 @@ class ValveController:
             self.valve_dict[key].open(order_dict[key])
 
 
-
 class ValveInterface:
     __metaclass__ = abc.ABCMeta
 
@@ -27,6 +26,7 @@ class ValveInterface:
 
 
 '''Every Valve class need to define get_postion functions that returns the valve position as int and an open(float) function'''
+
 
 class Valve(ValveInterface):
 

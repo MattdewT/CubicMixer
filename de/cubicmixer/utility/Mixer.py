@@ -11,7 +11,6 @@ class Mixer:
             self.ingredient_key_size[key] = len(scripts.library.ingredients_dict[key])
             self.ingredient_key_alternator[key] = 0
 
-
     def mix_drink(self, recipe):
         hardware.Display.write_display(["Mixing:", recipe.name])
 

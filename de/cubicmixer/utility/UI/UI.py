@@ -46,13 +46,16 @@ class UserInterface:
 
     def switch_left(self):
         self.current_position += 1
-        if self.current_position >= len(self.UITree.current_node.child_list):
+        if self.current_position >= len(self.UITree.current_node.parent_node.get_children()):
             self.current_position = 0
+        self.UITree.current_node = self.UITree.current_node.parent_node.get_children()[self.current_position]
+        print self.UITree.current_node.parent_node.msg
 
     def switch_right(self):
         self.current_position -= 1
         if self.current_position < 0:
             self.current_position = len(self.UITree.current_node.child_list) - 1
+        self.UITree.current_node = self.UITree.current_node.parent_node.get_children()[self.current_position]
 
     def enter(self):
         self.UITree.descend(self.current_position)
