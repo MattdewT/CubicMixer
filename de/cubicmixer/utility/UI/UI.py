@@ -57,6 +57,7 @@ class UserInterface:
         self.UITree.current_node = self.UITree.current_node.parent_node.get_children()[self.current_position]
 
     def enter(self):
+        self.current_position = 0
         self.UITree.descend(self.current_position)
 
     def back(self):
@@ -126,8 +127,8 @@ class UserInterface:
         self.UITree.add_node(Node(["test valves", ""], False))
 
         self.UITree.descend(1)
-        self.UITree.add_node(LeafNode(["chose by", "ingredient"], self.config.stuff()))
-        self.UITree.add_node(LeafNode(["chose by", "position"], self.config.stuff()))
+        self.UITree.add_node(LeafNode(["chose by", "ingredient"], self.config.stuff))
+        self.UITree.add_node(LeafNode(["chose by", "position"], self.config.stuff))
 
         self.UITree.add_node_to_root(Node(["Dice", ""], False))
         self.UITree.go_to_root()
@@ -136,10 +137,10 @@ class UserInterface:
         self.UITree.add_node(Node(["Connection", "Status"], False))
 
         self.UITree.descend(0)
-        self.UITree.add_node(LeafNode(["Status", ""], self.config.stuff()))
-        self.UITree.add_node(LeafNode(["Ping", ""], self.config.stuff()))
+        self.UITree.add_node(LeafNode(["Status", ""], self.config.stuff))
+        self.UITree.add_node(LeafNode(["Ping", ""], self.config.stuff))
 
-        self.UITree.add_node_to_root(LeafNode(["Chose Drink", ""], self.config.stuff()))
+        self.UITree.add_node_to_root(LeafNode(["Chose Drink", ""], self.config.stuff))
 
 
 class Config:

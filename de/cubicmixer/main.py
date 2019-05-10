@@ -59,6 +59,8 @@ if __name__ == "__main__":
     print Diagnostic.separator_str
 
     TestUI.UITree.go_to_root()
+    TestUI.UITree.descend(0)
+
     while True:
         utility.UI.update(TestUI)
         print TestUI.UITree.current_node.msg[0]
