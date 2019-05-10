@@ -50,6 +50,9 @@ if __name__ == "__main__":
     print Diagnostic.separator_str
 
     TestUI = utility.UI.UserInterface()
+    TestUI.UITree.print_tree()
+
+    print Diagnostic.separator_str
 
     while True:
         utility.UI.update(TestUI)

@@ -49,12 +49,11 @@ class UserInterface:
         if self.current_position >= len(self.UITree.current_node.parent_node.get_children()):
             self.current_position = 0
         self.UITree.current_node = self.UITree.current_node.parent_node.get_children()[self.current_position]
-        print self.UITree.current_node.parent_node.msg
 
     def switch_right(self):
         self.current_position -= 1
         if self.current_position < 0:
-            self.current_position = len(self.UITree.current_node.child_list) - 1
+            self.current_position = len(self.UITree.current_node.parent_node.get_children()) - 1
         self.UITree.current_node = self.UITree.current_node.parent_node.get_children()[self.current_position]
 
     def enter(self):
@@ -64,7 +63,7 @@ class UserInterface:
         self.UITree.ascend()
 
     def setup_tree(self):
-        self.UITree.add_node(Node("Setup", False))
+        self.UITree.add_node_to_root(Node("Setup", False))
 
         self.UITree.descend(0)
         self.UITree.add_node(Node("Menumode", False))
@@ -77,10 +76,10 @@ class UserInterface:
         self.UITree.add_node(Node("Operationmode", False))
 
         self.UITree.ascend()
-        self.UITree.add_node(Node("Info", False))
-        self.UITree.add_node(Node("Maintenance", True))
-        self.UITree.add_node(Node("Dice", False))
-        self.UITree.add_node(Node("Chose Drink", False))
+        self.UITree.add_node_to_root(Node("Info", False))
+        self.UITree.add_node_to_root(Node("Maintenance", True))
+        self.UITree.add_node_to_root(Node("Dice", False))
+        self.UITree.add_node_to_root(Node("Chose Drink", False))
 
 
 class UIMessage:

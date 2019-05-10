@@ -7,6 +7,9 @@ class Tree:
     def add_node(self, node):
         self.current_node.add_child(node)
 
+    def add_node_to_root(self, node):
+        self.root.add_child(node)
+
     def descend(self, child_position):
         if not isinstance(self.current_node, LeafNode):
             self.current_node = self.current_node.get_children()[child_position]
@@ -14,6 +17,9 @@ class Tree:
     def ascend(self):
         if self.current_node.parent_node.msg != "Root":
             self.current_node = self.current_node.parent_node
+
+    def print_tree(self):
+        self.root.print_node(0)
 
 
 class Node:
@@ -34,6 +40,11 @@ class Node:
     def get_children(self):
         return self.child_list
 
+    def print_node(self, depth):
+        print depth * 2 * "-" + self.msg
+        for child in self.child_list:
+            child.print_node(depth + 1)
+
 
 class LeafNode:
 
@@ -43,4 +54,7 @@ class LeafNode:
 
     def get_value(self):
         return self.return_value
+
+    def print_node(self, depth):
+        print depth * 2 * "-" + self.msg
 
