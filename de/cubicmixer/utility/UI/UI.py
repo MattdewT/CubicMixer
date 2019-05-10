@@ -76,11 +76,70 @@ class UserInterface:
         self.UITree.ascend()
         self.UITree.add_node(Node(["Operationmode", ""], False))
 
-        self.UITree.ascend()
+        self.UITree.descend(1)
+        self.UITree.add_node(LeafNode(["Recipe", ""], self.config.stuff))
+        self.UITree.add_node(LeafNode(["Ingredient", ""], self.config.stuff))
+
         self.UITree.add_node_to_root(Node(["Info", ""], False))
+        self.UITree.go_to_root()
+        self.UITree.descend(1)
+
+        self.UITree.add_node(Node(["Loaded Script Information", ""], False))
+
+        self.UITree.descend(0)
+        self.UITree.add_node(LeafNode(["Loaded Scipts", ""], self.config.stuff))
+        self.UITree.add_node(LeafNode(["Loaded Recipes", ""], self.config.stuff))
+        self.UITree.add_node(LeafNode(["Loaded Ingredients", ""], self.config.stuff))
+
+        self.UITree.ascend()
+        self.UITree.add_node(Node(["Discarded Information", ""], True))
+
+        self.UITree.descend(1)
+        self.UITree.add_node(LeafNode(["Discarded Scripts", ""], self.config.stuff))
+        self.UITree.add_node(LeafNode(["Discarded Recipes", ""], self.config.stuff))
+        self.UITree.add_node(LeafNode(["Discarded Ingredients", ""], self.config.stuff))
+
+        self.UITree.ascend()
+        self.UITree.add_node(Node(["Version", ""], True))
+
+        self.UITree.descend(2)
+        self.UITree.add_node(LeafNode(["version 4.2", ""], self.config.stuff))
+
+        self.UITree.ascend()
+        self.UITree.add_node(Node(["Developer", ""], True))
+
+        self.UITree.descend(3)
+        self.UITree.add_node(LeafNode(["MathDew", ""], self.config.stuff))
+        self.UITree.add_node(LeafNode(["TimDew", ""], self.config.stuff))
+
+        self.UITree.ascend()
+        self.UITree.add_node(Node(["Help", ""], True))
+
+        self.UITree.descend(4)
+        self.UITree.add_node(LeafNode(["Github : MattdewT/CubicMixer", ""], self.config.stuff))
+
         self.UITree.add_node_to_root(Node(["Maintenance", ""], True))
+        self.UITree.go_to_root()
+        self.UITree.descend(2)
+
+        self.UITree.add_node(LeafNode(["reboot", ""], self.config.stuff()))
+        self.UITree.add_node(Node(["test valves", ""], False))
+
+        self.UITree.descend(1)
+        self.UITree.add_node(LeafNode(["chose by", "ingredient"], self.config.stuff()))
+        self.UITree.add_node(LeafNode(["chose by", "position"], self.config.stuff()))
+
         self.UITree.add_node_to_root(Node(["Dice", ""], False))
-        self.UITree.add_node_to_root(Node(["Chose Drink", ""], False))
+        self.UITree.go_to_root()
+        self.UITree.descend(3)
+
+        self.UITree.add_node(Node(["Connection", "Status"], False))
+
+        self.UITree.descend(0)
+        self.UITree.add_node(LeafNode(["Status", ""], self.config.stuff()))
+        self.UITree.add_node(LeafNode(["Ping", ""], self.config.stuff()))
+
+        self.UITree.add_node_to_root(LeafNode(["Chose Drink", ""], self.config.stuff()))
 
 
 class Config:
@@ -104,3 +163,4 @@ def update(ui_interface):
         ui_interface.switch_right()
     else:
         print "Wrong Input, use w = Enter, s = back, a = left, d = right"
+

@@ -1,7 +1,7 @@
 class Tree:
 
     def __init__(self):
-        self.root = Node("Root", False)
+        self.root = Node(["Root", ""], False)
         self.current_node = self.root
 
     def add_node(self, node):
@@ -46,8 +46,9 @@ class Node:
         return self.child_list
 
     def print_node(self, depth):
-        print depth * 2 * "-" + self.msg[0]
-        print depth * 2 * "-" + self.msg[1]
+        print depth * 4 * "-" + self.msg[0]
+        if not self.msg[1] == "":
+            print depth * 4 * " " + self.msg[1]
         for child in self.child_list:
             child.print_node(depth + 1)
 
@@ -59,8 +60,9 @@ class LeafNode:
         self.enter_function = enter_function
 
     def print_node(self, depth):
-        print depth * 2 * "-" + self.msg[0]
-        print depth * 2 * "-" + self.msg[1]
+        print depth * 4 * "-" + self.msg[0]
+        if not self.msg[1] == "":
+            print depth * 4 * " " + self.msg[1]
 
     def on_enter(self):
         self.enter_function()
