@@ -40,6 +40,7 @@ from Tree import Tree, LeafNode, Node
 class UserInterface:
 
     def __init__(self):
+        self.config = Config()
         self.UITree = Tree()
         self.setup_tree()
         self.current_position = 0
@@ -63,29 +64,33 @@ class UserInterface:
         self.UITree.ascend()
 
     def setup_tree(self):
-        self.UITree.add_node_to_root(Node("Setup", False))
+
+        self.UITree.add_node_to_root(Node(["Setup", ""], False))
 
         self.UITree.descend(0)
-        self.UITree.add_node(Node("Menumode", False))
+        self.UITree.add_node(Node(["Menumode", ""], False))
 
         self.UITree.descend(0)
-        self.UITree.add_node(LeafNode("True", True))
-        self.UITree.add_node(LeafNode("False", False))
+        self.UITree.add_node(LeafNode(["True", ""], self.config.stuff))
+        self.UITree.add_node(LeafNode(["False", ""], self.config.stuff))
 
         self.UITree.ascend()
-        self.UITree.add_node(Node("Operationmode", False))
+        self.UITree.add_node(Node(["Operationmode", ""], False))
 
         self.UITree.ascend()
-        self.UITree.add_node_to_root(Node("Info", False))
-        self.UITree.add_node_to_root(Node("Maintenance", True))
-        self.UITree.add_node_to_root(Node("Dice", False))
-        self.UITree.add_node_to_root(Node("Chose Drink", False))
+        self.UITree.add_node_to_root(Node(["Info", ""], False))
+        self.UITree.add_node_to_root(Node(["Maintenance", ""], True))
+        self.UITree.add_node_to_root(Node(["Dice", ""], False))
+        self.UITree.add_node_to_root(Node(["Chose Drink", ""], False))
 
 
-class UIMessage:
+class Config:
 
     def __init__(self):
-        self.msg
+        pass
+
+    def stuff(self):
+        print "hello"
 
 
 def update(ui_interface):

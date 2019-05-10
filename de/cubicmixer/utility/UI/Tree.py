@@ -11,7 +11,9 @@ class Tree:
         self.root.add_child(node)
 
     def descend(self, child_position):
-        if not isinstance(self.current_node, LeafNode):
+        if isinstance(self.current_node, LeafNode):
+            self.current_node.on_enter()
+        else:
             self.current_node = self.current_node.get_children()[child_position]
 
     def ascend(self):
@@ -20,6 +22,9 @@ class Tree:
 
     def print_tree(self):
         self.root.print_node(0)
+
+    def go_to_root(self):
+        self.current_node = self.root
 
 
 class Node:
@@ -41,20 +46,22 @@ class Node:
         return self.child_list
 
     def print_node(self, depth):
-        print depth * 2 * "-" + self.msg
+        print depth * 2 * "-" + self.msg[0]
+        print depth * 2 * "-" + self.msg[1]
         for child in self.child_list:
             child.print_node(depth + 1)
 
 
 class LeafNode:
 
-    def __init__(self, msg, return_value):
+    def __init__(self, msg, enter_function):
         self.msg = msg
-        self.return_value = return_value
-
-    def get_value(self):
-        return self.return_value
+        self.enter_function = enter_function
 
     def print_node(self, depth):
-        print depth * 2 * "-" + self.msg
+        print depth * 2 * "-" + self.msg[0]
+        print depth * 2 * "-" + self.msg[1]
+
+    def on_enter(self):
+        self.enter_function()
 
