@@ -4,14 +4,14 @@ UI Prototyping
 Setup           Menumode                long
                                         short
                 Operationmode           recipe mode
-                                        random mode
+                                        ingredient mode
 Info            Loaded Scripts Infos    loaded scripts
                                         loaded recipes
                                         loaded ingredients
-                (Discarded Inforamtion) discarded scripts
+                (Discarded Information) discarded scripts
                                         discarded recipes
                                         discarded ingredients
-                Version                 version xx
+                Version                 version 4.2
                 Developer               Mathdew
                                         Timdew
                 Help                    Github: MattdewT/CubicMixer
@@ -20,18 +20,17 @@ Info            Loaded Scripts Infos    loaded scripts
                 reboot
 Dice            Connection Status       Connection_Status
                                         ping
-                Idle Counter            idle_counter_time
 Chose Drink
-
+-------------------------------------------------------------
 BootUp
-Spalsh Screen
+Splash Screen
 Script Information
 Dice Status
 
 Mixing Loop
     Dice Input Information
     Displaying Result
-    Mixing (with progress bar?)
+    Mixing (with progress bar!)
 """
 
 from Tree import Tree, LeafNode, Node
