@@ -34,6 +34,8 @@ Mixing Loop
 """
 
 from Tree import Tree, LeafNode, Node
+import hardware
+from utility import Diagnostic
 
 
 class UserInterface:
@@ -71,15 +73,15 @@ class UserInterface:
         self.UITree.add_node(Node(["Menumode", ""], False))
 
         self.UITree.descend(0)
-        self.UITree.add_node(LeafNode(["True", ""], self.config.stuff))
-        self.UITree.add_node(LeafNode(["False", ""], self.config.stuff))
+        self.UITree.add_node(LeafNode(["True", ""], self.config.set_menu_mode, True))
+        self.UITree.add_node(LeafNode(["False", ""], self.config.set_menu_mode, False))
 
         self.UITree.ascend()
         self.UITree.add_node(Node(["Operationmode", ""], False))
 
         self.UITree.descend(1)
-        self.UITree.add_node(LeafNode(["Recipe", ""], self.config.stuff))
-        self.UITree.add_node(LeafNode(["Ingredient", ""], self.config.stuff))
+        self.UITree.add_node(LeafNode(["Recipe", ""], self.config.set_operation_mode, True))
+        self.UITree.add_node(LeafNode(["Ingredient", ""], self.config.set_operation_mode, False))
 
         self.UITree.add_node_to_root(Node(["Info", ""], False))
         self.UITree.go_to_root()
@@ -101,20 +103,20 @@ class UserInterface:
         self.UITree.add_node(LeafNode(["Discarded Ingredients", ""], self.config.stuff))
 
         self.UITree.ascend()
-        self.UITree.add_node(Node(["Version", ""], True))
+        self.UITree.add_node(Node(["Version", ""], False))
 
         self.UITree.descend(2)
         self.UITree.add_node(LeafNode(["version 4.2", ""], self.config.stuff))
 
         self.UITree.ascend()
-        self.UITree.add_node(Node(["Developer", ""], True))
+        self.UITree.add_node(Node(["Developer", ""], False))
 
         self.UITree.descend(3)
         self.UITree.add_node(LeafNode(["MathDew", ""], self.config.stuff))
         self.UITree.add_node(LeafNode(["TimDew", ""], self.config.stuff))
 
         self.UITree.ascend()
-        self.UITree.add_node(Node(["Help", ""], True))
+        self.UITree.add_node(Node(["Help", ""], False))
 
         self.UITree.descend(4)
         self.UITree.add_node(LeafNode(["Github : MattdewT/CubicMixer", ""], self.config.stuff))
@@ -123,7 +125,7 @@ class UserInterface:
         self.UITree.go_to_root()
         self.UITree.descend(2)
 
-        self.UITree.add_node(LeafNode(["reboot", ""], self.config.stuff()))
+        self.UITree.add_node(LeafNode(["reboot", ""], self.config.stuff))
         self.UITree.add_node(Node(["test valves", ""], False))
 
         self.UITree.descend(1)
@@ -146,10 +148,33 @@ class UserInterface:
 class Config:
 
     def __init__(self):
-        pass
+        self.menu_long = False
+        self.mix_by_recipes = True
 
-    def stuff(self):
-        print "hello"
+    @staticmethod
+    def print_to_display(msg):
+        hardware.Display.write_display(msg)
+
+    def set_menu_mode(self, is_long):
+        self.menu_long
+        print Diagnostic.debug_str + "set menu to detailed view: " + str(is_long) + Diagnostic.bcolors.ENDC
+
+    def set_operation_mode(self, by_recipe):
+        self.mix_by_recipes = by_recipe
+        print Diagnostic.debug_str + "set mixing mode by recipe: " + str(by_recipe) + Diagnostic.bcolors.ENDC
+
+    @staticmethod
+    def reboot():
+        print Diagnostic.debug_str + "Rebooting" + Diagnostic.bcolors.ENDC
+
+    @staticmethod
+    def ping():
+        print Diagnostic.debug_str + "Rebooting" + Diagnostic.bcolors.ENDC
+
+    # ToDo: Remove function
+    @staticmethod
+    def stuff():
+        print "please change function"
 
 
 def update(ui_interface):

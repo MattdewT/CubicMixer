@@ -55,9 +55,10 @@ class Node:
 
 class LeafNode:
 
-    def __init__(self, msg, enter_function):
+    def __init__(self, msg, enter_function, args=-1):
         self.msg = msg
         self.enter_function = enter_function
+        self.args = args
 
     def print_node(self, depth):
         print depth * 4 * "-" + self.msg[0]
@@ -65,5 +66,8 @@ class LeafNode:
             print depth * 4 * " " + self.msg[1]
 
     def on_enter(self):
-        self.enter_function()
+        if self.args != -1:
+            self.enter_function(self.args)
+        else:
+            self.enter_function()
 
