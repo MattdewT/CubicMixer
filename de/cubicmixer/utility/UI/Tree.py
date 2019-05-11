@@ -46,9 +46,9 @@ class Node:
         return self.child_list
 
     def print_node(self, depth):
-        print depth * 4 * "-" + self.msg[0]
+        print depth * 4 * "-" + ("(" if self.is_hidden else "") + self.msg[0] + (")" if self.is_hidden else "")
         if not self.msg[1] == "":
-            print depth * 4 * " " + self.msg[1]
+            print depth * 4 * "-" + ("(" if self.is_hidden else "") + self.msg[1] + (")" if self.is_hidden else "")
         for child in self.child_list:
             child.print_node(depth + 1)
 

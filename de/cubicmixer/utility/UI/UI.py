@@ -52,18 +52,41 @@ class UserInterface:
             self.current_position = 0
         self.UITree.current_node = self.UITree.current_node.parent_node.get_children()[self.current_position]
 
+        if isinstance(self.UITree.current_node, Node):      # skip hidden nodes
+            if self.UITree.current_node.is_hidden and not self.config.menu_long:
+                self.current_position += 1
+                if self.current_position >= len(self.UITree.current_node.parent_node.get_children()):
+                    self.current_position = 0
+                self.UITree.current_node = self.UITree.current_node.parent_node.get_children()[self.current_position]
+
+        self.update_display()
+
     def switch_right(self):
         self.current_position -= 1
         if self.current_position < 0:
             self.current_position = len(self.UITree.current_node.parent_node.get_children()) - 1
         self.UITree.current_node = self.UITree.current_node.parent_node.get_children()[self.current_position]
 
+        if isinstance(self.UITree.current_node, Node):      # skip hidden nodes
+            if self.UITree.current_node.is_hidden and not self.config.menu_long:
+                self.current_position -= 1
+                if self.current_position < 0:
+                    self.current_position = len(self.UITree.current_node.parent_node.get_children()) - 1
+                self.UITree.current_node = self.UITree.current_node.parent_node.get_children()[self.current_position]
+
+        self.update_display()
+
     def enter(self):
         self.current_position = 0
         self.UITree.descend(self.current_position)
+        self.update_display()
 
     def back(self):
         self.UITree.ascend()
+        self.update_display()
+
+    def update_display(self):
+        hardware.Display.write_display(self.UITree.current_node.msg)
 
     def setup_tree(self):
 
@@ -156,7 +179,7 @@ class Config:
         hardware.Display.write_display(msg)
 
     def set_menu_mode(self, is_long):
-        self.menu_long
+        self.menu_long = is_long
         print Diagnostic.debug_str + "set menu to detailed view: " + str(is_long) + Diagnostic.bcolors.ENDC
 
     def set_operation_mode(self, by_recipe):
@@ -174,7 +197,8 @@ class Config:
     # ToDo: Remove function
     @staticmethod
     def stuff():
-        print "please change function"
+        print Diagnostic.error_str + "please change function" + Diagnostic.bcolors.ENDC
+        hardware.Display.write_display(["not defined yet", "please fix"])
 
 
 def update(ui_interface):
