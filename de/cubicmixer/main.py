@@ -4,6 +4,8 @@ from utility import Diagnostic
 import hardware
 from utility.Mixer import Mixer
 import utility
+from multiprocessing import Process, Manager
+import Dice
 
 if __name__ == "__main__":
 
@@ -57,6 +59,14 @@ if __name__ == "__main__":
 
     TestUI.UITree.go_to_root()
     TestUI.UITree.descend(0)
+
+    mgr = Manager()
+    ns = mgr.Namespace()
+
+    p = Process(target=Dice.run, args=(ns, ))
+    p.start()
+
+    p.join()
 
     while True:
         utility.UI.update(TestUI)

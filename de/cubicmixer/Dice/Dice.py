@@ -75,7 +75,7 @@ class Dice:
         return result
 
 
-def main():
+def run(ns):
 
     TCP_IP = '192.168.137.224'
     TCP_PORT = 80
@@ -95,10 +95,7 @@ def main():
         d.parse_content(data)
         d.calculate_delta()
         d.cube_idle_counter()
-        print d.get_current_dice_roll_list()
+        ns.dice_data = d.get_current_dice_roll_object()
 
         s.close()
 
-
-if __name__ == "__main__":
-    main()
