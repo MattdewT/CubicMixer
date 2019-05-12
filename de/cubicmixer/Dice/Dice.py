@@ -77,18 +77,16 @@ class Dice:
 
 def run(ns):
 
-    TCP_IP = '192.168.137.224'
+    TCP_IP = '192.168.137.206'
     TCP_PORT = 80
     BUFFER_SIZE = 1024
 
     d = Dice()
 
     while True:
-
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
+        s.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 400, 300))        # socket keep alive
         s.connect((TCP_IP, TCP_PORT))
-
 
         data = s.recv(BUFFER_SIZE)
 

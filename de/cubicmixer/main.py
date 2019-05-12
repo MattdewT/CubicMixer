@@ -6,6 +6,7 @@ from utility.Mixer import Mixer
 import utility
 from multiprocessing import Process, Manager
 import Dice
+import time
 
 if __name__ == "__main__":
 
@@ -62,12 +63,11 @@ if __name__ == "__main__":
 
     mgr = Manager()
     ns = mgr.Namespace()
+    ns.dice_data = Dice.DiceData([0, 0, 0], False)
 
     p = Process(target=Dice.run, args=(ns, ))
     p.start()
 
-    p.join()
-
     while True:
-        utility.UI.update(TestUI)
-        print TestUI.UITree.current_node.msg[0]
+        time.sleep(0.2)
+        print ns.dice_data.orientation, ns.dice_data.is_rolling

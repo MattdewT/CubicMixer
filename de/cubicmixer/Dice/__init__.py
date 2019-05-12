@@ -1,1 +1,1 @@
-from Dice import run
+from Dice import run, DiceData
