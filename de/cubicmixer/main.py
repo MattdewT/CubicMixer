@@ -6,6 +6,10 @@ from utility.Mixer import Mixer
 import utility
 
 if __name__ == "__main__":
+    
+    # --------------------------------- hardware setup ------------------------------------
+
+    hardware.Display.setup()
 
     # --------------------------------- load and check scripts ------------------------------------
 
