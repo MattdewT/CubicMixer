@@ -159,30 +159,30 @@ def setup_automat():
 
     a.add_state(s)
 
-    s = State(23, False)
-    s.add_transition(Transition(['m'], 24))
+    s = State(23, False)                                                                                                #State 23
+    s.add_transition(Transition(['m'], 24))                                                                             #if 'm' go to state 24
 
     a.add_state(s)
 
-    s = State(24, False)
-    s.add_transition(Transition(['l'], 25))
+    s = State(24, False)                                                                                                #State 24
+    s.add_transition(Transition(['l'], 25))                                                                             #if 'l' go to state 25    
 
     a.add_state(s)
 
-    s = State(25, True)
-    s.add_transition(Transition(['\n'], 26))
+    s = State(25, True)                                                                                                 #State 25
+    s.add_transition(Transition(['\n'], 26))                                                                            #if '\n' go to state 26
 
     a.add_state(s)
 
-    s = State(26, True)
-    s.add_transition(Transition(['\n'], 18))
-    s.add_transition(Transition(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v','w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R','S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'], 20))
+    s = State(26, True)                                                                                                 #State 26
+    s.add_transition(Transition(['\n'], 18))                                                                            #if '\n' go to state 18
+    s.add_transition(Transition(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v','w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R','S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'], 20))    #if 'letter' go to state 20
 
     a.add_state(s)
 
-    s = State(27, False)
-    s.add_transition(Transition(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v','w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R','S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'], 20))
-    s.add_transition(Transition(['\n'], 27))
+    s = State(27, False)                                                                                                #State 27
+    s.add_transition(Transition(['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v','w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R','S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'], 20))    #if 'letter' go to state 20
+    s.add_transition(Transition(['\n'], 27))                                                                            #if '\n' go to state 27
 
     a.add_state(s)
 
