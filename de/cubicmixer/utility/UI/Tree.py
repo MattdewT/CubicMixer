@@ -1,29 +1,29 @@
 class Tree:
 
-    def __init__(self):                                                                                         #Creating BaseNode
+    def __init__(self):                                                                                         # Creating BaseNode
         self.root = Node(["Root", ""], False)
         self.current_node = self.root
 
-    def add_node(self, node):                                                                                   #Adding new Node to current Node   
+    def add_node(self, node):                                                                                   # Adding new Node to current Node   
         self.current_node.add_child(node)
 
-    def add_node_to_root(self, node):                                                                           #Adding new Node to BaseNode   
+    def add_node_to_root(self, node):                                                                           # Adding new Node to BaseNode   
         self.root.add_child(node)
 
-    def descend(self, child_position):                                                                          #Go down one step of Nodes
+    def descend(self, child_position):                                                                          # Go down one step of Nodes
         if isinstance(self.current_node, LeafNode):
             self.current_node.on_enter()
         else:
             self.current_node = self.current_node.get_children()[child_position]
 
-    def ascend(self):                                                                                           #Go up one step of Nodes
+    def ascend(self):                                                                                           # Go up one step of Nodes
         if self.current_node.parent_node.msg[0] != "Root":
             self.current_node = self.current_node.parent_node
 
-    def print_tree(self):                                                                                       #Print current Node    
+    def print_tree(self):                                                                                       # Print current Node    
         self.root.print_node(0)
 
-    def go_to_root(self):                                                                                       #Jump to specific Node    
+    def go_to_root(self):                                                                                       # Jump to specific Node    
         self.current_node = self.root
 
 
