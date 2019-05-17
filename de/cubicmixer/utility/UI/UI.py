@@ -76,12 +76,12 @@ class UserInterface:
 
         self.update_display()
 
-    def enter(self):                                                                                    #Action Enter
+    def enter(self):                                                                                    # Action Enter
         self.current_position = 0
         self.UITree.descend(self.current_position)
         self.update_display()
 
-    def back(self):                                                                                     #Action Back
+    def back(self):                                                                                     # Action Back
         self.UITree.ascend()
         self.update_display()
 
@@ -90,82 +90,82 @@ class UserInterface:
 
     def setup_tree(self):
 
-        self.UITree.add_node_to_root(Node(["Setup", ""], False))                                        #Initialising Menu Setup 
+        self.UITree.add_node_to_root(Node(["Setup", ""], False))                                        # Initialising Menu Setup 
 
         self.UITree.descend(0)
-        self.UITree.add_node(Node(["Menumode", ""], False))                                             #Initialising Submenu Menumode
+        self.UITree.add_node(Node(["Menumode", ""], False))                                             # Initialising Submenu Menumode
 
         self.UITree.descend(0)
-        self.UITree.add_node(LeafNode(["True", ""], self.config.set_menu_mode, True))                   #Menumode long
-        self.UITree.add_node(LeafNode(["False", ""], self.config.set_menu_mode, False))                 #Menumode short
+        self.UITree.add_node(LeafNode(["True", ""], self.config.set_menu_mode, True))                   # Menumode long
+        self.UITree.add_node(LeafNode(["False", ""], self.config.set_menu_mode, False))                 # Menumode short
 
         self.UITree.ascend()
-        self.UITree.add_node(Node(["Operationmode", ""], False))                                        #Initialising Submenu Operationmode
+        self.UITree.add_node(Node(["Operationmode", ""], False))                                        # Initialising Submenu Operationmode
 
         self.UITree.descend(1)
-        self.UITree.add_node(LeafNode(["Recipe", ""], self.config.set_operation_mode, True))            #Operationmode Recipe
-        self.UITree.add_node(LeafNode(["Ingredient", ""], self.config.set_operation_mode, False))       #Operationmode Ingredient
+        self.UITree.add_node(LeafNode(["Recipe", ""], self.config.set_operation_mode, True))            # Operationmode Recipe
+        self.UITree.add_node(LeafNode(["Ingredient", ""], self.config.set_operation_mode, False))       # Operationmode Ingredient
 
-        self.UITree.add_node_to_root(Node(["Info", ""], False))                                         #Initialising Menu Info
+        self.UITree.add_node_to_root(Node(["Info", ""], False))                                         # Initialising Menu Info
         self.UITree.go_to_root()
         self.UITree.descend(1)
 
-        self.UITree.add_node(Node(["Loaded Script Information", ""], False))                            #Initialising Submenu Loaded Script Information
+        self.UITree.add_node(Node(["Loaded Script Information", ""], False))                            # Initialising Submenu Loaded Script Information
 
         self.UITree.descend(0)
-        self.UITree.add_node(LeafNode(["Loaded Scipts", ""], self.config.stuff))                        #LSI Loaded Scripts
-        self.UITree.add_node(LeafNode(["Loaded Recipes", ""], self.config.stuff))                       #LSI Loaded Recipes
-        self.UITree.add_node(LeafNode(["Loaded Ingredients", ""], self.config.stuff))                   #LSI Loaded Ingredients
+        self.UITree.add_node(LeafNode(["Loaded Scipts", ""], self.config.stuff))                        # LSI Loaded Scripts
+        self.UITree.add_node(LeafNode(["Loaded Recipes", ""], self.config.stuff))                       # LSI Loaded Recipes
+        self.UITree.add_node(LeafNode(["Loaded Ingredients", ""], self.config.stuff))                   # LSI Loaded Ingredients
 
         self.UITree.ascend()
-        self.UITree.add_node(Node(["Discarded Information", ""], True))                                 #Initialising Submenu Discarded Information
+        self.UITree.add_node(Node(["Discarded Information", ""], True))                                 # Initialising Submenu Discarded Information
 
         self.UITree.descend(1)
-        self.UITree.add_node(LeafNode(["Discarded Scripts", ""], self.config.stuff))                    #DI Discarded Scripts
-        self.UITree.add_node(LeafNode(["Discarded Recipes", ""], self.config.stuff))                    #DI Discarded Recipes
-        self.UITree.add_node(LeafNode(["Discarded Ingredients", ""], self.config.stuff))                #DI Discarded Ingredients
+        self.UITree.add_node(LeafNode(["Discarded Scripts", ""], self.config.stuff))                    # DI Discarded Scripts
+        self.UITree.add_node(LeafNode(["Discarded Recipes", ""], self.config.stuff))                    # DI Discarded Recipes
+        self.UITree.add_node(LeafNode(["Discarded Ingredients", ""], self.config.stuff))                # DI Discarded Ingredients
 
         self.UITree.ascend()
-        self.UITree.add_node(Node(["Version", ""], False))                                              #Initialising Submenu Version
+        self.UITree.add_node(Node(["Version", ""], False))                                              # Initialising Submenu Version
 
         self.UITree.descend(2)
-        self.UITree.add_node(LeafNode(["version 4.2", ""], self.config.stuff))                          #Version version 4.2
+        self.UITree.add_node(LeafNode(["version 4.2", ""], self.config.stuff))                          # Version version 4.2
 
         self.UITree.ascend()
-        self.UITree.add_node(Node(["Developer", ""], False))                                            #Initialising Submenu Developer
+        self.UITree.add_node(Node(["Developer", ""], False))                                            # Initialising Submenu Developer
 
         self.UITree.descend(3)
-        self.UITree.add_node(LeafNode(["MathDew", ""], self.config.stuff))                              #Developer MathDew
-        self.UITree.add_node(LeafNode(["TimDew", ""], self.config.stuff))                               #Developer TimDew
+        self.UITree.add_node(LeafNode(["MathDew", ""], self.config.stuff))                              # Developer MathDew
+        self.UITree.add_node(LeafNode(["TimDew", ""], self.config.stuff))                               # Developer TimDew
 
         self.UITree.ascend()
-        self.UITree.add_node(Node(["Help", ""], False))                                                 #Initialising Submenu Help
+        self.UITree.add_node(Node(["Help", ""], False))                                                 # Initialising Submenu Help
 
         self.UITree.descend(4)
-        self.UITree.add_node(LeafNode(["Github : MattdewT/CubicMixer", ""], self.config.stuff))         #Help Github : MattdewT/Cubicmixer
+        self.UITree.add_node(LeafNode(["Github : MattdewT/CubicMixer", ""], self.config.stuff))         # Help Github : MattdewT/Cubicmixer
 
-        self.UITree.add_node_to_root(Node(["Maintenance", ""], True))                                   #Initialising Menu Maintenance
+        self.UITree.add_node_to_root(Node(["Maintenance", ""], True))                                   # Initialising Menu Maintenance
         self.UITree.go_to_root()
         self.UITree.descend(2)
 
-        self.UITree.add_node(LeafNode(["reboot", ""], self.config.stuff))                               #Maintenance reboot
-        self.UITree.add_node(Node(["test valves", ""], False))                                          #Initialising Submenu test valves
+        self.UITree.add_node(LeafNode(["reboot", ""], self.config.stuff))                               # Maintenance reboot
+        self.UITree.add_node(Node(["test valves", ""], False))                                          # Initialising Submenu test valves
 
         self.UITree.descend(1)
-        self.UITree.add_node(LeafNode(["chose by", "ingredient"], self.config.stuff))                   #tv chose by ingredient
-        self.UITree.add_node(LeafNode(["chose by", "position"], self.config.stuff))                     #tv chose by position
+        self.UITree.add_node(LeafNode(["chose by", "ingredient"], self.config.stuff))                   # tv chose by ingredient
+        self.UITree.add_node(LeafNode(["chose by", "position"], self.config.stuff))                     # tv chose by position
 
-        self.UITree.add_node_to_root(Node(["Dice", ""], False))                                         #Initialising Menu Dice
+        self.UITree.add_node_to_root(Node(["Dice", ""], False))                                         # Initialising Menu Dice
         self.UITree.go_to_root()
         self.UITree.descend(3)
 
-        self.UITree.add_node(Node(["Connection", "Status"], False))                                     #Initialising Submenu Connection Status
+        self.UITree.add_node(Node(["Connection", "Status"], False))                                     # Initialising Submenu Connection Status
 
         self.UITree.descend(0)
-        self.UITree.add_node(LeafNode(["Status", ""], self.config.stuff))                               #CS Status
-        self.UITree.add_node(LeafNode(["Ping", ""], self.config.stuff))                                 #CS Ping
+        self.UITree.add_node(LeafNode(["Status", ""], self.config.stuff))                               # CS Status
+        self.UITree.add_node(LeafNode(["Ping", ""], self.config.stuff))                                 # CS Ping
 
-        self.UITree.add_node_to_root(LeafNode(["Chose Drink", ""], self.config.stuff))                  #Initialising Menu Chose Drink
+        self.UITree.add_node_to_root(LeafNode(["Chose Drink", ""], self.config.stuff))                  # Initialising Menu Chose Drink
 
 
 class Config:
