@@ -1,5 +1,5 @@
 import socket
-
+from utility import Diagnostic
 
 class DiceData:
 
@@ -75,25 +75,51 @@ class Dice:
         return result
 
 
+def convert_to_dice_numbers(xyz):
+    if xyz[0] == -1:
+        return 1
+    elif xyz[0] == 1:
+        return 6
+    elif xyz[1] == -1:
+        return 3
+    elif xyz[1] == 1:
+        return 4
+    elif xyz[2] == -1:
+        return 2
+    else:
+        return 5
+
 def run(ns):
 
-    TCP_IP = '192.168.137.9'
+    TCP_IP = '192.168.137.10'
+
     TCP_PORT = 80
     BUFFER_SIZE = 1024
 
     d = Dice()
+    dice_connected_first_time = True
 
     while True:
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        # s.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 400, 300))        # socket keep alive
-        s.connect((TCP_IP, TCP_PORT))
+        try:
+            s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            # s.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 400, 300))        # socket keep alive
+            s.settimeout(2)                                             # socket timeout
+            s.connect((TCP_IP, TCP_PORT))
 
-        data = s.recv(BUFFER_SIZE)
+            if dice_connected_first_time:
+                print Diagnostic.debug_str + "Dice connected" + Diagnostic.bcolors.ENDC
+                dice_connected_first_time = False
 
-        d.parse_content(data)
-        d.calculate_delta()
-        d.cube_idle_counter()
-        ns.dice_data = d.get_current_dice_roll_object()
+            data = s.recv(BUFFER_SIZE)
 
-        s.close()
+            d.parse_content(data)
+            d.calculate_delta()
+            d.cube_idle_counter()
+            ns.dice_data = d.get_current_dice_roll_object()
+
+            s.close()
+        except socket.timeout as e:
+            if not dice_connected_first_time:
+                print Diagnostic.debug_str + "Dice disconnected" + Diagnostic.bcolors.ENDC
+            dice_connected_first_time = True
 

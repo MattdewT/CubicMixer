@@ -68,6 +68,15 @@ if __name__ == "__main__":
     p = Process(target=Dice.run, args=(ns, ))
     p.start()
 
+    cubed_changed = False
+
     while True:
         time.sleep(0.2)
-        print ns.dice_data.orientation, ns.dice_data.is_rolling
+        if not ns.dice_data.is_rolling:
+            cubed_changed = True
+        if cubed_changed and ns.dice_data.is_rolling:
+            cubed_changed = False
+            print ns.dice_data.orientation, ns.dice_data.is_rolling, Dice.convert_to_dice_numbers(ns.dice_data.orientation)
+            mixer.chose_recipe(Dice.convert_to_dice_numbers(ns.dice_data.orientation))
+
+
