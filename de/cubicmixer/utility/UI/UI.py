@@ -35,6 +35,7 @@ Mixing Loop
 
 from Tree import Tree, LeafNode, Node
 import hardware
+import scripts
 from utility import Diagnostic
 
 
@@ -77,9 +78,11 @@ class UserInterface:
         self.update_display()
 
     def enter(self):
+        is_leaf_node = True if isinstance(self.UITree.current_node, LeafNode) else False
         self.current_position = 0
         self.UITree.descend(self.current_position)
-        self.update_display()
+        if not is_leaf_node:
+            self.update_display()
 
     def back(self):
         self.UITree.ascend()
@@ -110,12 +113,12 @@ class UserInterface:
         self.UITree.go_to_root()
         self.UITree.descend(1)
 
-        self.UITree.add_node(Node(["Loaded Script Information", ""], False))
+        self.UITree.add_node(Node(["Loaded Script", "Information"], False))
 
         self.UITree.descend(0)
-        self.UITree.add_node(LeafNode(["Loaded Scipts", ""], self.config.stuff))
-        self.UITree.add_node(LeafNode(["Loaded Recipes", ""], self.config.stuff))
-        self.UITree.add_node(LeafNode(["Loaded Ingredients", ""], self.config.stuff))
+        self.UITree.add_node(LeafNode(["Loaded Scipts", ""], self.config.display_msg, [str(Diagnostic.loaded_scripts), "Scripts loaded"]))
+        self.UITree.add_node(LeafNode(["Loaded Recipes", ""],  self.config.display_msg, [str(len(scripts.library.recipes_list)), "Recipes loaded"]))
+        self.UITree.add_node(LeafNode(["Loaded Ingredients", ""],  self.config.display_msg, [str(len(scripts.library.recipes_list)), "Ingredients loaded"]))
 
         self.UITree.ascend()
         self.UITree.add_node(Node(["Discarded Information", ""], True))
@@ -142,7 +145,7 @@ class UserInterface:
         self.UITree.add_node(Node(["Help", ""], False))
 
         self.UITree.descend(4)
-        self.UITree.add_node(LeafNode(["Github : MattdewT/CubicMixer", ""], self.config.stuff))
+        self.UITree.add_node(LeafNode(["Github:", "MattdewT/CubicMixer"], self.config.stuff))
 
         self.UITree.add_node_to_root(Node(["Maintenance", ""], True))
         self.UITree.go_to_root()
@@ -185,6 +188,10 @@ class Config:
     def set_operation_mode(self, by_recipe):
         self.mix_by_recipes = by_recipe
         print Diagnostic.debug_str + "set mixing mode by recipe: " + str(by_recipe) + Diagnostic.bcolors.ENDC
+
+    @staticmethod
+    def display_msg(msg):
+        hardware.Display.write_display(msg[0])
 
     @staticmethod
     def reboot():

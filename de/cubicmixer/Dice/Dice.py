@@ -89,6 +89,7 @@ def convert_to_dice_numbers(xyz):
     else:
         return 5
 
+
 def run(ns):
 
     TCP_IP = '192.168.137.10'
@@ -102,7 +103,6 @@ def run(ns):
     while True:
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            # s.ioctl(socket.SIO_KEEPALIVE_VALS, (1, 400, 300))        # socket keep alive
             s.settimeout(2)                                             # socket timeout
             s.connect((TCP_IP, TCP_PORT))
 

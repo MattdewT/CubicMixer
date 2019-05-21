@@ -36,19 +36,19 @@ if __name__ == "__main__":
 
     hardware.Display.write_display(["Ingredients: " + str(len(scripts.library.ingredients_dict)), "Recipes: " + str(len(scripts.library.recipes_list))])
 
-    mixer = Mixer()
-
     print Diagnostic.separator_str
 
     print Diagnostic.unloaded_scripts, "unloaded scripts"
     print Diagnostic.discarded_recipe, "discarded recipes"
     print Diagnostic.discarded_ingredients, "discarded ingredients"
 
+    mixer = Mixer()
+
     print mixer.mix_drink(scripts.library.recipes_list[0]), "Mix 1"
     vc = hardware.Valve_Master.setup_valve_controller()
     vc.open_valves(mixer.mix_drink(scripts.library.recipes_list[0]))
 
-    # --------------------------------- test n stuff UI ------------------------------------
+    # --------------------------------- setup UI ------------------------------------
 
     print Diagnostic.separator_str
 
@@ -56,10 +56,12 @@ if __name__ == "__main__":
 
     TestUI.UITree.print_tree()
 
-    print Diagnostic.separator_str
-
     TestUI.UITree.go_to_root()
     TestUI.UITree.descend(0)
+
+    print Diagnostic.separator_str
+
+    # --------------------------------- dice connection process setup ------------------------------------
 
     mgr = Manager()
     ns = mgr.Namespace()
@@ -70,13 +72,23 @@ if __name__ == "__main__":
 
     cubed_changed = False
 
+    # --------------------------------- main loop ------------------------------------
+
     while True:
+
+        # -------------------------------------------- slow down main loop ---------------------------------------------
         time.sleep(0.2)
+        # ------------------------------------------- get dice rolls ---------------------------------------------------
         if not ns.dice_data.is_rolling:
             cubed_changed = True
         if cubed_changed and ns.dice_data.is_rolling:
             cubed_changed = False
             print ns.dice_data.orientation, ns.dice_data.is_rolling, Dice.convert_to_dice_numbers(ns.dice_data.orientation)
             mixer.chose_recipe(Dice.convert_to_dice_numbers(ns.dice_data.orientation))
+        # ------------------------------------------ gui user interface ------------------------------------------------
+        utility.UI.update(TestUI)
+
+
+
 
 
