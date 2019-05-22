@@ -29,5 +29,5 @@ class Mixer:
 
     @staticmethod
     def chose_recipe(dice_roll_number):
-        float_ = (float(dice_roll_number) / float((Dice.dice_possible_outcomes + 1))) * 6
+        float_ = (float(dice_roll_number) / float((Dice.dice_possible_outcomes + 1))) * len(scripts.library.recipes_list)
         print int(float_)

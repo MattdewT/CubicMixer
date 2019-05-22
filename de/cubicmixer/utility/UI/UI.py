@@ -118,7 +118,7 @@ class UserInterface:
         self.UITree.descend(0)
         self.UITree.add_node(LeafNode(["Loaded Scipts", ""], self.config.display_msg, [str(Diagnostic.loaded_scripts), "Scripts loaded"]))
         self.UITree.add_node(LeafNode(["Loaded Recipes", ""],  self.config.display_msg, [str(len(scripts.library.recipes_list)), "Recipes loaded"]))
-        self.UITree.add_node(LeafNode(["Loaded Ingredients", ""],  self.config.display_msg, [str(len(scripts.library.recipes_list)), "Ingredients loaded"]))
+        self.UITree.add_node(LeafNode(["Loaded Ingredients", ""],  self.config.display_msg, [str(len(scripts.library.ingredients_dict)), "Ingredients loaded"]))
 
         self.UITree.ascend()
         self.UITree.add_node(Node(["Discarded Information", ""], True))
