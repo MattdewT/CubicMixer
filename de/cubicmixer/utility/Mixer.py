@@ -27,6 +27,7 @@ class Mixer:
 
         return valve_volume_dict
 
-    def chose_recipe(self, dice_roll_number):
+    @staticmethod
+    def chose_recipe(dice_roll_number):
         float_ = (float(dice_roll_number) / float((Dice.dice_possible_outcomes + 1))) * 6
         print int(float_)
