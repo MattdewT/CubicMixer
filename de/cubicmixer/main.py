@@ -48,6 +48,9 @@ if __name__ == "__main__":
     vc = hardware.Valve_Master.setup_valve_controller()
     vc.open_valves(mixer.mix_drink(scripts.library.recipes_list[0]))
 
+    em = utility.EventManger()
+    em.call_event("start_up", 1)
+
     # --------------------------------- dice connection process setup ------------------------------------
 
     mgr = Manager()
