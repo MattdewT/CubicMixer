@@ -100,7 +100,7 @@ def run(ns):
     d = Dice()
     dice_connected_first_time = True
 
-    while True:
+    while ns.running:
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.settimeout(2)                                             # socket timeout

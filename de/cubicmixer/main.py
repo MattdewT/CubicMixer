@@ -48,14 +48,23 @@ if __name__ == "__main__":
     vc = hardware.Valve_Master.setup_valve_controller()
     vc.open_valves(mixer.mix_drink(scripts.library.recipes_list[0]))
 
-    em = utility.EventManger()
-    em.call_event("start_up", 1)
+    # --------------------------------- dice connection process setup ------------------------------------
+
+    mgr = Manager()
+    ns = mgr.Namespace()
+    ns.dice_data = Dice.DiceData([0, 0, 0], False)
+    ns.running = True
+
+    p = Process(target=Dice.run, args=(ns, ))
+    p.start()
+
+    cubed_changed = False
 
     # --------------------------------- setup UI ------------------------------------
 
     print Diagnostic.separator_str
 
-    TestUI = utility.UI.UserInterface()
+    TestUI = utility.UI.UserInterface(ns)
 
     TestUI.UITree.print_tree()
 
@@ -64,20 +73,9 @@ if __name__ == "__main__":
 
     print Diagnostic.separator_str
 
-    # --------------------------------- dice connection process setup ------------------------------------
-
-    mgr = Manager()
-    ns = mgr.Namespace()
-    ns.dice_data = Dice.DiceData([0, 0, 0], False)
-
-    p = Process(target=Dice.run, args=(ns, ))
-    p.start()
-
-    cubed_changed = False
-
     # --------------------------------- main loop ------------------------------------
 
-    while True:
+    while ns.running:
 
         # -------------------------------------------- slow down main loop ---------------------------------------------
         time.sleep(0.2)
@@ -91,6 +89,9 @@ if __name__ == "__main__":
         # ------------------------------------------ gui user interface ------------------------------------------------
         utility.UI.update(TestUI)
 
+    # ---------------------------------------- clean up and shutdown ---------------------------------------------------
+
+    p.join()
 
 
 
