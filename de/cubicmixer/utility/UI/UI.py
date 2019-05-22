@@ -41,8 +41,8 @@ from utility import Diagnostic
 
 class UserInterface:
 
-    def __init__(self):
-        self.config = Config()
+    def __init__(self, namespace):
+        self.config = Config(namespace)
         self.UITree = Tree()
         self.setup_tree()
         self.current_position = 0
@@ -151,7 +151,7 @@ class UserInterface:
         self.UITree.go_to_root()
         self.UITree.descend(2)
 
-        self.UITree.add_node(LeafNode(["reboot", ""], self.config.stuff))
+        self.UITree.add_node(LeafNode(["reboot", ""], self.config.reboot))
         self.UITree.add_node(Node(["test valves", ""], False))
 
         self.UITree.descend(1)
@@ -173,9 +173,10 @@ class UserInterface:
 
 class Config:
 
-    def __init__(self):
+    def __init__(self, ns):
         self.menu_long = False
         self.mix_by_recipes = True
+        self.ns = ns
 
     @staticmethod
     def print_to_display(msg):
@@ -193,13 +194,13 @@ class Config:
     def display_msg(msg):
         hardware.Display.write_display(msg[0])
 
-    @staticmethod
-    def reboot():
+    def reboot(self):
         print Diagnostic.debug_str + "Rebooting" + Diagnostic.bcolors.ENDC
+        self.ns.running = False
 
     @staticmethod
     def ping():
-        print Diagnostic.debug_str + "Rebooting" + Diagnostic.bcolors.ENDC
+        print Diagnostic.debug_str + "Pinging" + Diagnostic.bcolors.ENDC
 
     # ToDo: Remove function
     @staticmethod
