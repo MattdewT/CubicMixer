@@ -10,6 +10,16 @@ import time
 
 if __name__ == "__main__":
 
+    # --------------------------------------- setup multiprocessing namespace -----------------------------
+
+    mgr = Manager()
+    ns = mgr.Namespace()
+
+    # --------------------------------------------- event manager -----------------------------------------------------
+
+    ns.em = utility.EventManger()
+    ns.em.call_event("start_up", 1)
+
     # --------------------------------- load and check scripts ------------------------------------
 
     b = os.listdir(os.path.join(os.getcwd(), 'res'))
@@ -48,13 +58,8 @@ if __name__ == "__main__":
     vc = hardware.Valve_Master.setup_valve_controller()
     vc.open_valves(mixer.mix_drink(scripts.library.recipes_list[0]))
 
-    em = utility.EventManger()
-    em.call_event("start_up", 1)
-
     # --------------------------------- dice connection process setup ------------------------------------
 
-    mgr = Manager()
-    ns = mgr.Namespace()
     ns.dice_data = Dice.DiceData([0, 0, 0], False)
     ns.running = True
 
@@ -73,6 +78,11 @@ if __name__ == "__main__":
 
     TestUI.UITree.go_to_root()
     TestUI.UITree.descend(0)
+
+    print Diagnostic.separator_str
+
+    d = ns.em.return_lambda_namespace_callback(ns)
+    d(2)
 
     print Diagnostic.separator_str
 

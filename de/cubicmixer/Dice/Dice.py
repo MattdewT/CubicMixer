@@ -1,6 +1,7 @@
 import socket
 from utility import Diagnostic
 
+
 class DiceData:
 
     def __init__(self, orientation, is_rolling):
@@ -92,7 +93,7 @@ def convert_to_dice_numbers(xyz):
 
 def run(ns):
 
-    TCP_IP = '192.168.137.10'
+    TCP_IP = '192.168.137.212'
 
     TCP_PORT = 80
     BUFFER_SIZE = 1024
@@ -103,12 +104,13 @@ def run(ns):
     while ns.running:
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.settimeout(2)                                             # socket timeout
+            s.settimeout(5)                                             # socket timeout
             s.connect((TCP_IP, TCP_PORT))
 
             if dice_connected_first_time:
                 print Diagnostic.debug_str + "Dice connected" + Diagnostic.bcolors.ENDC
                 dice_connected_first_time = False
+                ns.em.call_event("cube_connected", 1)
 
             data = s.recv(BUFFER_SIZE)
 
@@ -121,5 +123,6 @@ def run(ns):
         except socket.timeout as e:
             if not dice_connected_first_time:
                 print Diagnostic.debug_str + "Dice disconnected" + Diagnostic.bcolors.ENDC
+                ns.em.call_event("cube_disconnected", 1)
             dice_connected_first_time = True
 
