@@ -13,6 +13,7 @@ if __name__ == "__main__":
     # --------------------------------- hardware setup ------------------------------------
 
     hardware.Display.setup()
+    hardware.IO.setup()
 
     # --------------------------------------- setup multiprocessing namespace -----------------------------
 
