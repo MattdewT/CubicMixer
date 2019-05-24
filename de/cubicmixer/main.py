@@ -98,9 +98,9 @@ if __name__ == "__main__":
         if cubed_changed and ns.dice_data.is_rolling:
             cubed_changed = False
             print ns.dice_data.orientation, ns.dice_data.is_rolling, Dice.convert_to_dice_numbers(ns.dice_data.orientation)
-            mixer.chose_recipe(Dice.convert_to_dice_numbers(ns.dice_data.orientation))
+            #mixer.chose_recipe(Dice.convert_to_dice_numbers(ns.dice_data.orientation))
         # ------------------------------------------ gui user interface ------------------------------------------------
-        utility.UI.update(TestUI)
+        #utility.UI.update(TestUI)
 
     # ---------------------------------------- clean up and shutdown ---------------------------------------------------
 

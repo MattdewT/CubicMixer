@@ -87,13 +87,15 @@ def convert_to_dice_numbers(xyz):
         return 4
     elif xyz[2] == -1:
         return 2
-    else:
+    elif xyz[2] == 1:
         return 5
+    else:
+        print Diagnostic.debug_str + "could not assign face" + Diagnostic.bcolors.ENDC
 
 
 def run(ns):
 
-    TCP_IP = '192.168.137.212'
+    TCP_IP = '192.168.137.232'
 
     TCP_PORT = 80
     BUFFER_SIZE = 1024
