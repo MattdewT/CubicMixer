@@ -82,7 +82,7 @@ if __name__ == "__main__":
     print Diagnostic.separator_str
 
     d = ns.em.return_lambda_namespace_callback(ns)
-    d(2)
+    d(3)
 
     print Diagnostic.separator_str
 
