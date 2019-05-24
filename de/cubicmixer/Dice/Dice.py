@@ -95,7 +95,7 @@ def convert_to_dice_numbers(xyz):
 
 def run(ns):
 
-    TCP_IP = '192.168.137.232'
+    TCP_IP = '192.168.137.225'
 
     TCP_PORT = 80
     BUFFER_SIZE = 1024
