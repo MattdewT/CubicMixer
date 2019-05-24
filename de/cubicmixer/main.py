@@ -9,12 +9,6 @@ import Dice
 import time
 
 if __name__ == "__main__":
-    
-    # --------------------------------- hardware setup ------------------------------------
-
-    hardware.Display.setup()
-    hardware.IO.setup()
-
     # --------------------------------------- setup multiprocessing namespace -----------------------------
 
     mgr = Manager()
@@ -23,8 +17,13 @@ if __name__ == "__main__":
     # --------------------------------------------- event manager -----------------------------------------------------
 
     ns.em = utility.EventManger()
-    ns.em.call_event("start_up", 1)
 
+    # --------------------------------- hardware setup ------------------------------------
+
+    hardware.Display.setup()
+    
+    ns.em.call_event("start_up", 1)
+    
     # --------------------------------- load and check scripts ------------------------------------
 
     b = os.listdir(os.path.join(os.getcwd(), 'res'))
@@ -83,11 +82,10 @@ if __name__ == "__main__":
 
     TestUI.UITree.go_to_root()
     TestUI.UITree.descend(0)
+    
+    hardware.IO.setup(ns, TestUI)
 
     print Diagnostic.separator_str
-
-    d = ns.em.return_lambda_namespace_callback(ns)
-    d(3)
 
     print Diagnostic.separator_str
 
@@ -100,9 +98,14 @@ if __name__ == "__main__":
         # ------------------------------------------- get dice rolls ---------------------------------------------------
         if not ns.dice_data.is_rolling:
             cubed_changed = True
+            ns.em.call_event("dice_rolling", 1)
         if cubed_changed and ns.dice_data.is_rolling:
             cubed_changed = False
-            print ns.dice_data.orientation, ns.dice_data.is_rolling, Dice.convert_to_dice_numbers(ns.dice_data.orientation)
+            
+            dice_roll_number = str(Dice.convert_to_dice_numbers(ns.dice_data.orientation))
+            
+            print ns.dice_data.orientation, ns.dice_data.is_rolling, dice_roll_number
+            ns.em.call_event("dice_rolled", 1, dice_roll_number)
             #mixer.chose_recipe(Dice.convert_to_dice_numbers(ns.dice_data.orientation))
         # ------------------------------------------ gui user interface ------------------------------------------------
         #utility.UI.update(TestUI)
