@@ -112,7 +112,7 @@ def run(ns):
             if dice_connected_first_time:
                 print Diagnostic.debug_str + "Dice connected" + Diagnostic.bcolors.ENDC
                 dice_connected_first_time = False
-                ns.em.call_event("cube_connected", 1)
+                ns.em.call_event("cube_connected", 0)
 
             data = s.recv(BUFFER_SIZE)
 
@@ -125,6 +125,6 @@ def run(ns):
         except socket.timeout as e:
             if not dice_connected_first_time:
                 print Diagnostic.debug_str + "Dice disconnected" + Diagnostic.bcolors.ENDC
-                ns.em.call_event("cube_disconnected", 1)
+                ns.em.call_event("cube_disconnected", 0)
             dice_connected_first_time = True
 

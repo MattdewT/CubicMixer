@@ -1,6 +1,6 @@
 import hardware
 import time
-
+import utility
 
 class EventManger:
 
@@ -13,7 +13,8 @@ class EventManger:
 
     def call_event(self, event, sleep_duration, *args):
         if args:
-            pass
+            if event == "dice_rolled":
+                self.handle_event_display_roll_result(args[0])
         else:
             if event == "start_up":
                 self.handle_event_start_up()
@@ -21,9 +22,14 @@ class EventManger:
                 self.handle_event_cube_connected()
             elif event == "cube_disconnected":
                 self.handle_event_cube_disconnected()
+            elif event == "dice_rolling":
+                self.handle_event_dice_rolling()
+            
+        time.sleep(sleep_duration)
 
-    def return_lambda_namespace_callback(self, ns):
-        return lambda channel: self.handle_event_button_pressed(ns, channel)
+
+    def return_lambda_namespace_callback(self, ns, ui):
+        return lambda channel: self.handle_event_button_pressed(ns, ui, channel)
 
     @staticmethod
     def handle_event_start_up():
@@ -51,10 +57,10 @@ class EventManger:
 
     @staticmethod
     def handle_event_display_roll_result(dice_throw_result):
-        hardware.Display.write_display(["your rolled a", str(dice_throw_result[0])])
+        hardware.Display.write_display(["you've rolled a", str(dice_throw_result[0])])
 
     @staticmethod
-    def handle_event_button_pressed(ns, channel):
-        print str(channel), ns.running
+    def handle_event_button_pressed(ns, ui, channel):
+        utility.UI.update_buttons(ui, channel)
 
 

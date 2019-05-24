@@ -221,4 +221,15 @@ def update(ui_interface):
         ui_interface.switch_right()
     else:
         print "Wrong Input, use w = Enter, s = back, a = left, d = right"
-
+    
+def update_buttons(ui_interface, channel):
+    if channel == 17:
+        ui_interface.enter()
+    elif channel == 18:
+        ui_interface.switch_left()
+    elif channel == 19:
+        ui_interface.back()
+    elif channel == 20:
+        ui_interface.switch_right()
+    else:
+        print "Error parsing button input"
