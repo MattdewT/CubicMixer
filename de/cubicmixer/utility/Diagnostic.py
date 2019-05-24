@@ -60,3 +60,5 @@ separator_str = "---------------------------------------------------------------
 discarded_recipe = 0
 discarded_ingredients = 0
 unloaded_scripts = 0
+
+loaded_scripts = 0

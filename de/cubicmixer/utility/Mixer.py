@@ -1,6 +1,6 @@
 import scripts
 import hardware
-
+import Dice
 
 class Mixer:
 
@@ -26,3 +26,8 @@ class Mixer:
                 self.ingredient_key_alternator[condiment] = 0
 
         return valve_volume_dict
+
+    @staticmethod
+    def chose_recipe(dice_roll_number):
+        float_ = (float(dice_roll_number) / float((Dice.dice_possible_outcomes + 1))) * len(scripts.library.recipes_list)
+        print int(float_)

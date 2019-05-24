@@ -1,5 +1,6 @@
 import abc
 
+
 class ValveController:
 
     def __init__(self):
@@ -45,6 +46,9 @@ def setup_valve_controller():
 
     vc.add_valve(Valve(9))
     vc.add_valve(Valve(13))
+    vc.add_valve(Valve(12))
+    vc.add_valve(Valve(8))
+    vc.add_valve(Valve(7))
 
     return vc
 

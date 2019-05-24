@@ -27,6 +27,8 @@ def load_script(script_path):
 
         sort_script_type(lines_str, script_path)
 
+        Diagnostic.loaded_scripts += 1
+
     except IOError:
         print Diagnostic.error_str + "Problems with File loading: ", script_path + Diagnostic.bcolors.ENDC
         Diagnostic.unloaded_scripts += 1
