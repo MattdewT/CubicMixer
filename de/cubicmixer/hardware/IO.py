@@ -3,9 +3,10 @@ Created on 24.05.2019
 
 @author: pi
 '''
-import RPi.GPIO as GPIO
+# import RPi.GPIO as GPIO
 
-def setup(ns, ui):
+
+def setup_gpio(ns, ui):
     
     callback_lambda = ns.em.return_lambda_namespace_callback(ns, ui)
 
@@ -21,3 +22,6 @@ def setup(ns, ui):
     GPIO.add_event_detect(19, GPIO.RISING, callback=callback_lambda, bouncetime=250)
     GPIO.add_event_detect(20, GPIO.RISING, callback=callback_lambda, bouncetime=250)
     
+
+def setup_keyboard(ns, ui):
+    pass

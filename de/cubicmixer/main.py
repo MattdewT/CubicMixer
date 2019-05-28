@@ -20,7 +20,7 @@ if __name__ == "__main__":
 
     # --------------------------------- hardware setup ------------------------------------
 
-    hardware.Display.setup()
+    # hardware.Display.setup()
     
     ns.em.call_event("start_up", 1)
     
@@ -83,7 +83,7 @@ if __name__ == "__main__":
     TestUI.UITree.go_to_root()
     TestUI.UITree.descend(0)
     
-    hardware.IO.setup(ns, TestUI)
+    hardware.IO.setup_keyboard(ns, TestUI)
 
     print Diagnostic.separator_str
 
