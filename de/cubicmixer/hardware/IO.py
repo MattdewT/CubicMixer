@@ -3,7 +3,17 @@ Created on 24.05.2019
 
 @author: pi
 '''
-# import RPi.GPIO as GPIO
+import platform
+if not platform.system() == "Windows":
+    import RPi.GPIO as GPIO
+
+
+def setup(ns, ui):
+    if platform.system() == "Windows":
+        ns.os_is_windows = True
+    else:
+        setup_gpio(ns, ui)
+        ns.os_is_windows = False
 
 
 def setup_gpio(ns, ui):
@@ -23,5 +33,3 @@ def setup_gpio(ns, ui):
     GPIO.add_event_detect(20, GPIO.RISING, callback=callback_lambda, bouncetime=250)
     
 
-def setup_keyboard(ns, ui):
-    pass

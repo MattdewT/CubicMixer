@@ -8,6 +8,7 @@ from multiprocessing import Process, Manager
 import Dice
 import time
 
+
 if __name__ == "__main__":
     # --------------------------------------- setup multiprocessing namespace -----------------------------
 
@@ -20,7 +21,7 @@ if __name__ == "__main__":
 
     # --------------------------------- hardware setup ------------------------------------
 
-    # hardware.Display.setup()
+    hardware.Display.setup()
     
     ns.em.call_event("start_up", 1)
     
@@ -64,7 +65,7 @@ if __name__ == "__main__":
 
     # --------------------------------- dice connection process setup ------------------------------------
 
-    ns.dice_data = Dice.DiceData([0, 0, 0], False)
+    ns.dice_data = Dice.DiceData([0, 0, 0], True)
     ns.running = True
 
     p = Process(target=Dice.run, args=(ns, ))
@@ -83,7 +84,7 @@ if __name__ == "__main__":
     TestUI.UITree.go_to_root()
     TestUI.UITree.descend(0)
     
-    hardware.IO.setup_keyboard(ns, TestUI)
+    hardware.IO.setup(ns, TestUI)
 
     print Diagnostic.separator_str
 
@@ -99,6 +100,7 @@ if __name__ == "__main__":
         if not ns.dice_data.is_rolling:
             cubed_changed = True
             ns.em.call_event("dice_rolling", 1)
+
         if cubed_changed and ns.dice_data.is_rolling:
             cubed_changed = False
             
@@ -106,9 +108,10 @@ if __name__ == "__main__":
             
             print ns.dice_data.orientation, ns.dice_data.is_rolling, dice_roll_number
             ns.em.call_event("dice_rolled", 1, dice_roll_number)
-            #mixer.chose_recipe(Dice.convert_to_dice_numbers(ns.dice_data.orientation))
+            # mixer.chose_recipe(Dice.convert_to_dice_numbers(ns.dice_data.orientation))
         # ------------------------------------------ gui user interface ------------------------------------------------
-        #utility.UI.update(TestUI)
+        if ns.os_is_windows:
+            utility.UI.update_keyboard(TestUI)
 
     # ---------------------------------------- clean up and shutdown ---------------------------------------------------
 

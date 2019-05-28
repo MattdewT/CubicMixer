@@ -209,7 +209,7 @@ class Config:
         hardware.Display.write_display(["not defined yet", "please fix"])
 
 
-def update(ui_interface):
+def update_keyboard(ui_interface):
     char = raw_input("input")
     if char == 'w':
         ui_interface.enter()
@@ -221,7 +221,8 @@ def update(ui_interface):
         ui_interface.switch_right()
     else:
         print "Wrong Input, use w = Enter, s = back, a = left, d = right"
-    
+
+
 def update_buttons(ui_interface, channel):
     if channel == 17:
         ui_interface.enter()

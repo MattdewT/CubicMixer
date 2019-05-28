@@ -1,5 +1,8 @@
 import socket
 from utility import Diagnostic
+import errno
+from socket import error as socket_error
+import time
 
 
 class DiceData:
@@ -127,4 +130,9 @@ def run(ns):
                 print Diagnostic.debug_str + "Dice disconnected" + Diagnostic.bcolors.ENDC
                 ns.em.call_event("cube_disconnected", 0)
             dice_connected_first_time = True
+        except socket_error as serr:
+            if serr.errno == errno.ECONNREFUSED:
+                print Diagnostic.error_str + "couldn't connected to cube, retrying in 30 seconds" + Diagnostic.bcolors.ENDC
+                time.sleep(30)
+
 
