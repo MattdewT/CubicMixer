@@ -125,7 +125,7 @@ def run(ns):
             ns.dice_data = d.get_current_dice_roll_object()
 
             s.close()
-        except socket.timeout as e:
+        except socket.timeout:
             if not dice_connected_first_time:
                 print Diagnostic.debug_str + "Dice disconnected" + Diagnostic.bcolors.ENDC
                 ns.em.call_event("cube_disconnected", 0)

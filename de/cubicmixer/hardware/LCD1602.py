@@ -83,7 +83,7 @@ def openlight():  # Enable the backlight
     BUS.write_byte(0x27,0x08)
     BUS.close()
 
-def write(x, y, str):
+def write(x, y, str_):
     if x < 0:
         x = 0
     if x > 15:
@@ -97,8 +97,8 @@ def write(x, y, str):
     addr = 0x80 + 0x40 * y + x
     send_command(addr)
 
-    for chr in str:
-        send_data(ord(chr))
+    for chr_ in str_:
+        send_data(ord(chr_))
 
 if __name__ == '__main__':
     init(0x27, 1)
