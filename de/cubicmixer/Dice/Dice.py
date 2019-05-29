@@ -130,9 +130,7 @@ def run(ns):
                 print Diagnostic.debug_str + "Dice disconnected" + Diagnostic.bcolors.ENDC
                 ns.em.call_event("cube_disconnected", 0)
             dice_connected_first_time = True
-        except socket_error as serr:
+        except socket_error as serr:                                                                # ToDo: doesnt work
             if serr.errno == errno.ECONNREFUSED:
                 print Diagnostic.error_str + "couldn't connected to cube, retrying in 30 seconds" + Diagnostic.bcolors.ENDC
                 time.sleep(30)
-
-
