@@ -174,7 +174,7 @@ class UserInterface:
 class Config:
 
     def __init__(self, ns):
-        self.menu_long = False
+        self.menu_long = True
         self.mix_by_recipes = True
         self.ns = ns
 

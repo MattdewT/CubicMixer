@@ -11,7 +11,7 @@ class EventManger:
        # self.event_switch["cube_connected"] = self.handle_event_cube_connected
        # self.event_switch["cube_disconnected"] = self.handle_event_cube_disconnect
 
-    def call_event(self, event, sleep_duration, *args):
+    def call_event(self, event, sleep_duration=1, *args):
         if args:
             if event == "dice_rolled":
                 self.handle_event_display_roll_result(args[0])
@@ -24,6 +24,12 @@ class EventManger:
                 self.handle_event_cube_disconnected()
             elif event == "dice_rolling":
                 self.handle_event_dice_rolling()
+            elif event == "serial_error":
+                self.handle_serial_error()
+            elif event == "connecting_cube":
+                self.handle_connecting_cube()
+            elif event == "cube_configured":
+                self.handle_cube_configured()
             
         time.sleep(sleep_duration)
 
@@ -62,5 +68,18 @@ class EventManger:
     @staticmethod
     def handle_event_button_pressed(ns, ui, channel):
         utility.UI.update_buttons(ui, channel)
+        
+    @staticmethod
+    def handle_serial_error():
+        hardware.Display.write_display(["please connect", "cube over usb"])
+        
+    @staticmethod
+    def handle_connecting_cube():
+        hardware.Display.write_display(["connecting", "cube with wifi"])
+    
+    @staticmethod
+    def handle_cube_configured():
+        hardware.Display.write_display(["cube configured", "and connected"])
+
 
 
