@@ -3,6 +3,8 @@ from utility import Diagnostic
 import errno
 from socket import error as socket_error
 import time
+import serial
+import platform
 
 
 class DiceData:
@@ -96,10 +98,39 @@ def convert_to_dice_numbers(xyz):
         print Diagnostic.debug_str + "could not assign face" + Diagnostic.bcolors.ENDC
 
 
+def get_ip_of_dice(ns):
+    ip = None
+    cube_connected = False
+    ser = None
+    serial_running = False
+    
+    while not serial_running:
+        try:
+            ser = serial.Serial('/dev/ttyUSB0', 115200)
+            serial_running = True
+        except serial.SerialException:
+            ns.em.call_event("serial_error", 2)
+    
+    ns.em.call_event("connecting_cube")
+        
+    while not cube_connected:
+        line = ser.readline()
+        print line
+        if len(line.split(" ")) > 2:
+            cube_connected = True
+            ip = str(line.split("IP:")[1])
+    
+    ns.em.call_event("cube_configured")
+
+    
+    print Diagnostic.debug_str + "dice connected with the ip:",ip, Diagnostic.bcolors.ENDC
+    return ip
+
+
 def run(ns):
-
-    TCP_IP = '192.168.137.225'
-
+    
+    TCP_IP = get_ip_of_dice(ns) if platform.system() == "Linux" else '192.168.137.134'
+        
     TCP_PORT = 80
     BUFFER_SIZE = 1024
 

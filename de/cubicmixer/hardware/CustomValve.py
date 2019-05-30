@@ -24,7 +24,7 @@ class Valve(ValveInterface):
 def setup_valve():
     list_ = []
 
-    list_.append(Valve(7))
+    list_.append(Valve(6))
     list_.append(Valve(8))
     list_.append(Valve(9))
     list_.append(Valve(12))

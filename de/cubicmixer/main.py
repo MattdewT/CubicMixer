@@ -4,7 +4,7 @@ from utility import Diagnostic
 import hardware
 from utility.Mixer import Mixer
 import utility
-from multiprocessing import Process, Manager
+from multiprocessing import Process, Manager, Lock
 import Dice
 import time
 
@@ -20,8 +20,10 @@ if __name__ == "__main__":
     ns.em = utility.EventManger()
 
     # --------------------------------- hardware setup ------------------------------------
-
+    
+    hardware.IO.setup_gpio_configuration()
     hardware.Display.setup()
+    hardware.Display.write_display = lambda msg: hardware.Display.write_display_fct(msg, Lock())
     
     ns.em.call_event("start_up", 1)
     
@@ -116,7 +118,7 @@ if __name__ == "__main__":
     # ---------------------------------------- clean up and shutdown ---------------------------------------------------
 
     p.join()
-
+    hardware.IO.clean_up()
 
 
 

@@ -13,15 +13,17 @@ def setup(ns, ui):
     if platform.system() == "Windows":
         ns.os_is_windows = True
     else:
-        setup_gpio(ns, ui)
+        setup_buttons(ns, ui)
         ns.os_is_windows = False
 
 
-def setup_gpio(ns, ui):
+def setup_gpio_configuration():
+    GPIO.setmode(GPIO.BCM)
+
+
+def setup_buttons(ns, ui):
     
     callback_lambda = ns.em.return_lambda_namespace_callback(ns, ui)
-
-    GPIO.setmode(GPIO.BCM)
     
     GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -32,6 +34,10 @@ def setup_gpio(ns, ui):
     GPIO.add_event_detect(18, GPIO.RISING, callback=callback_lambda, bouncetime=250)
     GPIO.add_event_detect(19, GPIO.RISING, callback=callback_lambda, bouncetime=250)
     GPIO.add_event_detect(20, GPIO.RISING, callback=callback_lambda, bouncetime=250)
+
+
+def clean_up():
+    GPIO.cleanup()
     
 
 def set_pinmode(pin, mode):
@@ -42,5 +48,5 @@ def set_pinmode(pin, mode):
 
 def set_pin(pin, value):
     if not platform.system() == "Windows":
-        GPIO.output(pin, GPIO.LOW if value == "low" else GPIO.HIGH)
+        GPIO.output(pin, GPIO.LOW if value == "LOW" else GPIO.HIGH)
     print Diagnostic.debug_str + "set pin " + str(pin) + " to", value, Diagnostic.bcolors.ENDC
