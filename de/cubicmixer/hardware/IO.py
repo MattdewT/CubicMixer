@@ -4,6 +4,7 @@ Created on 24.05.2019
 @author: pi
 '''
 import platform
+from utility import Diagnostic
 if not platform.system() == "Windows":
     import RPi.GPIO as GPIO
 
@@ -33,3 +34,13 @@ def setup_gpio(ns, ui):
     GPIO.add_event_detect(20, GPIO.RISING, callback=callback_lambda, bouncetime=250)
     
 
+def set_pinmode(pin, mode):
+    if not platform.system() == "Windows":
+        GPIO.setup(pin, GPIO.IN if mode == "if" else GPIO.OUT)
+    print Diagnostic.debug_str + "set pin " + str(pin) + " as", "input" if mode == "in" else "output", Diagnostic.bcolors.ENDC
+
+
+def set_pin(pin, value):
+    if not platform.system() == "Windows":
+        GPIO.output(pin, GPIO.LOW if value == "low" else GPIO.HIGH)
+    print Diagnostic.debug_str + "set pin " + str(pin) + " to", value, Diagnostic.bcolors.ENDC

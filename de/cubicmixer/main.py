@@ -60,7 +60,7 @@ if __name__ == "__main__":
     mixer = Mixer()
 
     print mixer.mix_drink(scripts.library.recipes_list[0]), "Mix 1"
-    vc = hardware.Valve_Master.setup_valve_controller()
+    vc = hardware.ValveMaster.setup_valve_controller()
     vc.open_valves(mixer.mix_drink(scripts.library.recipes_list[0]))
 
     # --------------------------------- dice connection process setup ------------------------------------
