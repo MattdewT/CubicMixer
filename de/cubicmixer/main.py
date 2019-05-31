@@ -113,6 +113,10 @@ if __name__ == "__main__":
 
     print Diagnostic.separator_str
 
+    # ---------------------------------  ------------------------------------
+
+    vc.open_valves(mixer.mix_drink(scripts.library.recipes_list[0]))
+
     # --------------------------------- main loop ------------------------------------
 
     ui_loop(ns, TestUI)

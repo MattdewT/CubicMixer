@@ -8,26 +8,24 @@ as int and an open(float) function'''
 
 class Valve(ValveInterface):
 
-    def __init__(self, position):
+    def __init__(self, position, pin):
         self.position = position
-        IO.set_pinmode(position, "out")
+        self.pin = pin
+        IO.set_pinmode(pin, "out")
 
     def open(self, volume):
-        IO.set_pin(self.position, "HIGH")
+        IO.set_pin(self.pin, "HIGH")
         time.sleep(1)
-        IO.set_pin(self.position, "LOW")
+        IO.set_pin(self.pin, "LOW")
 
     def get_position(self):
         return self.position
 
 
 def setup_valve():
-    list_ = []
+    valves =[Valve(1, 5),
+             Valve(2, 6),
+             Valve(3, 13),
+             Valve(4, 26)]
 
-    list_.append(Valve(6))
-    list_.append(Valve(8))
-    list_.append(Valve(9))
-    list_.append(Valve(12))
-    list_.append(Valve(13))
-
-    return list_
+    return valves
