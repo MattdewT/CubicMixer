@@ -209,6 +209,12 @@ class Config:
         hardware.Display.write_display(["not defined yet", "please fix"])
 
 
+def get_keypress(ns):
+    while True:
+        ns.key_press = raw_input("enter key press")
+        print ns.key_press
+
+
 def update_keyboard(ui_interface):
     char = raw_input("input")
     if char == 'w':

@@ -9,6 +9,35 @@ import Dice
 import time
 
 
+def dice_loop(namespace, cube_changed):
+
+    while namespace.running:
+
+        # -------------------------------------------- slow down dice loop ---------------------------------------------
+        time.sleep(0.2)
+        # ------------------------------------------- get dice rolls ---------------------------------------------------
+        if not namespace.dice_data.is_rolling:
+            cube_changed = True
+            namespace.em.call_event("dice_rolling", 1)
+
+        if cube_changed and namespace.dice_data.is_rolling:
+            cube_changed = False
+
+            dice_roll_number = str(Dice.convert_to_dice_numbers(namespace.dice_data.orientation))
+
+            print namespace.dice_data.orientation, namespace.dice_data.is_rolling, dice_roll_number
+            namespace.em.call_event("dice_rolled", 1, dice_roll_number)
+
+
+def ui_loop(namespace, ui):
+
+    while namespace.running:
+        # -------------------------------------------- slow down ui loop ---------------------------------------------
+        time.sleep(0.2)
+        # ------------------------------------------- update ui ---------------------------------------------------
+        utility.UI.update_keyboard(ui)
+
+
 if __name__ == "__main__":
     # --------------------------------------- setup multiprocessing namespace -----------------------------
 
@@ -64,6 +93,9 @@ if __name__ == "__main__":
 
     cubed_changed = False
 
+    d = Process(target=dice_loop, args=(ns, cubed_changed))
+    d.start()
+
     # --------------------------------- setup UI ------------------------------------
 
     print Diagnostic.separator_str
@@ -83,32 +115,18 @@ if __name__ == "__main__":
 
     # --------------------------------- main loop ------------------------------------
 
-    while ns.running:
-
-        # -------------------------------------------- slow down main loop ---------------------------------------------
-        time.sleep(0.2)
-        # ------------------------------------------- get dice rolls ---------------------------------------------------
-        if not ns.dice_data.is_rolling:
-            cubed_changed = True
-            ns.em.call_event("dice_rolling", 1)
-
-        if cubed_changed and ns.dice_data.is_rolling:
-            cubed_changed = False
-            
-            dice_roll_number = str(Dice.convert_to_dice_numbers(ns.dice_data.orientation))
-            
-            print ns.dice_data.orientation, ns.dice_data.is_rolling, dice_roll_number
-            ns.em.call_event("dice_rolled", 1, dice_roll_number)
-            # mixer.chose_recipe(Dice.convert_to_dice_numbers(ns.dice_data.orientation))
-        # ------------------------------------------ gui user interface ------------------------------------------------
-        #if ns.os_is_windows:
-            #utility.UI.update_keyboard(TestUI)
+    ui_loop(ns, TestUI)
 
     # ---------------------------------------- clean up and shutdown ---------------------------------------------------
 
     ns.running = False
     p.join()
+    d.join()
     hardware.IO.clean_up()
+
+
+
+
 
 
 
