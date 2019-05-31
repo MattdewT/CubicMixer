@@ -1,15 +1,13 @@
 import hardware
 import time
 import utility
+from multiprocessing import Lock
+
 
 class EventManger:
 
     def __init__(self):
         pass
-       # self.event_switch = dict()
-       # self.event_switch["start_up"] = self.handle_event_start_up
-       # self.event_switch["cube_connected"] = self.handle_event_cube_connected
-       # self.event_switch["cube_disconnected"] = self.handle_event_cube_disconnect
 
     def call_event(self, event, sleep_duration=1, *args):
         if args:
@@ -32,7 +30,6 @@ class EventManger:
                 self.handle_cube_configured()
             
         time.sleep(sleep_duration)
-
 
     def return_lambda_namespace_callback(self, ns, ui):
         return lambda channel: self.handle_event_button_pressed(ns, ui, channel)

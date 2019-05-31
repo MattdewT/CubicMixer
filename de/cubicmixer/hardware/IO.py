@@ -18,7 +18,8 @@ def setup(ns, ui):
 
 
 def setup_gpio_configuration():
-    GPIO.setmode(GPIO.BCM)
+    if platform.system() == "Linux":
+        GPIO.setmode(GPIO.BCM)
 
 
 def setup_buttons(ns, ui):

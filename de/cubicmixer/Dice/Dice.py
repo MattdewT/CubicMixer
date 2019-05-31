@@ -98,19 +98,31 @@ def convert_to_dice_numbers(xyz):
         print Diagnostic.debug_str + "could not assign face" + Diagnostic.bcolors.ENDC
 
 
+def get_serial_connection(ns):
+    serial_running = False
+    ser = None
+    com_port = 'COM2' if platform.system() == "Windows" else '/dev/ttyUSB0'
+
+    while not serial_running:
+        try:
+            if platform.system() == "Linux":
+                ser = serial.Serial(com_port, 115200)
+                serial_running = True
+            elif platform.system() == "Windows":
+                ser = serial.Serial(com_port, 115200)
+                serial_running = True
+        except serial.SerialException:
+            ns.em.call_event("serial_error", 2)
+
+    return ser
+
+
 def get_ip_of_dice(ns):
     ip = None
     cube_connected = False
-    ser = None
-    serial_running = False
-    
-    while not serial_running:
-        try:
-            ser = serial.Serial('/dev/ttyUSB0', 115200)
-            serial_running = True
-        except serial.SerialException:
-            ns.em.call_event("serial_error", 2)
-    
+
+    ser = get_serial_connection(ns)
+
     ns.em.call_event("connecting_cube")
         
     while not cube_connected:
@@ -118,18 +130,18 @@ def get_ip_of_dice(ns):
         print line
         if len(line.split(" ")) > 2:
             cube_connected = True
-            ip = str(line.split("IP:")[1])
+            ip_raw = str(line.split("IP:")[1])
+            ip = ip_raw.rstrip()
     
     ns.em.call_event("cube_configured")
 
-    
     print Diagnostic.debug_str + "dice connected with the ip:",ip, Diagnostic.bcolors.ENDC
-    return ip
+    return str(ip)
 
 
 def run(ns):
     
-    TCP_IP = get_ip_of_dice(ns) if platform.system() == "Linux" else '192.168.137.134'
+    TCP_IP = get_ip_of_dice(ns)
         
     TCP_PORT = 80
     BUFFER_SIZE = 1024
@@ -140,7 +152,7 @@ def run(ns):
     while ns.running:
         try:
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            s.settimeout(5)                                             # socket timeout
+            s.settimeout(5)                                # socket timeout
             s.connect((TCP_IP, TCP_PORT))
 
             if dice_connected_first_time:

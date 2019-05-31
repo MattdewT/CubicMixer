@@ -23,7 +23,7 @@ if __name__ == "__main__":
     
     hardware.IO.setup_gpio_configuration()
     hardware.Display.setup()
-    hardware.Display.write_display = lambda msg: hardware.Display.write_display_fct(msg, Lock())
+    # hardware.Display.write_display = lambda msg: hardware.Display.write_display_fct(msg, Lock())
     
     ns.em.call_event("start_up", 1)
     
@@ -49,21 +49,10 @@ if __name__ == "__main__":
     print scripts.library.recipes_list
     print Diagnostic.separator_str
 
-    # --------------------------------- test n stuff ------------------------------------
-
-    hardware.Display.write_display(["Ingredients: " + str(len(scripts.library.ingredients_dict)), "Recipes: " + str(len(scripts.library.recipes_list))])
-
-    print Diagnostic.separator_str
-
-    print Diagnostic.unloaded_scripts, "unloaded scripts"
-    print Diagnostic.discarded_recipe, "discarded recipes"
-    print Diagnostic.discarded_ingredients, "discarded ingredients"
+    # --------------------------------- setup mixer and valve controller ------------------------------------
 
     mixer = Mixer()
-
-    print mixer.mix_drink(scripts.library.recipes_list[0]), "Mix 1"
     vc = hardware.ValveMaster.setup_valve_controller()
-    vc.open_valves(mixer.mix_drink(scripts.library.recipes_list[0]))
 
     # --------------------------------- dice connection process setup ------------------------------------
 
@@ -112,11 +101,12 @@ if __name__ == "__main__":
             ns.em.call_event("dice_rolled", 1, dice_roll_number)
             # mixer.chose_recipe(Dice.convert_to_dice_numbers(ns.dice_data.orientation))
         # ------------------------------------------ gui user interface ------------------------------------------------
-        if ns.os_is_windows:
-            utility.UI.update_keyboard(TestUI)
+        #if ns.os_is_windows:
+            #utility.UI.update_keyboard(TestUI)
 
     # ---------------------------------------- clean up and shutdown ---------------------------------------------------
 
+    ns.running = False
     p.join()
     hardware.IO.clean_up()
 
