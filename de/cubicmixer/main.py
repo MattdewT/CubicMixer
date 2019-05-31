@@ -51,8 +51,9 @@ if __name__ == "__main__":
     # --------------------------------- hardware setup ------------------------------------
     
     hardware.IO.setup_gpio_configuration()
-    hardware.Display.setup()
-    # hardware.Display.write_display = lambda msg: hardware.Display.write_display_fct(msg, Lock())
+    display = hardware.Display.Display()
+    display.setup()
+    hardware.Display.write_display = display.write_display_fct
     
     ns.em.call_event("start_up", 1)
     
