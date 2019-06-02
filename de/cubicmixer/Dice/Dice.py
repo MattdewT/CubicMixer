@@ -9,9 +9,9 @@ import platform
 
 class DiceData:
 
-    def __init__(self, orientation, is_rolling):
+    def __init__(self, orientation, is_not_rolling):
         self.orientation = orientation
-        self.is_rolling = is_rolling
+        self.is_not_rolling = is_not_rolling
 
 
 class Dice:
@@ -140,6 +140,8 @@ def get_ip_of_dice(ns):
 
 
 def run(ns):
+    if ns.emulate_dice:
+        return
     
     TCP_IP = get_ip_of_dice(ns)
         

@@ -1,7 +1,6 @@
 import hardware
 import time
 import utility
-from multiprocessing import Lock
 
 
 class EventManger:
@@ -13,6 +12,8 @@ class EventManger:
         if args:
             if event == "dice_rolled":
                 self.handle_event_display_roll_result(args[0])
+            elif event == "scripts_loaded":
+                self.handle_event_scripts_loaded(args[0], args[1])
         else:
             if event == "start_up":
                 self.handle_event_start_up()
@@ -60,7 +61,7 @@ class EventManger:
 
     @staticmethod
     def handle_event_display_roll_result(dice_throw_result):
-        hardware.Display.write_display(["you've rolled a", str(dice_throw_result[0])])
+        hardware.Display.write_display(["you've rolled a", str(dice_throw_result)])
 
     @staticmethod
     def handle_event_button_pressed(ns, ui, channel):
@@ -77,6 +78,10 @@ class EventManger:
     @staticmethod
     def handle_cube_configured():
         hardware.Display.write_display(["cube configured", "and connected"])
+
+    @staticmethod
+    def handle_event_scripts_loaded(ic, rc):
+        hardware.Display.write_display(["Ingredients: " + str(ic), "Recipes: " + str(rc)])
 
 
 

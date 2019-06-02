@@ -37,6 +37,8 @@ from Tree import Tree, LeafNode, Node
 import hardware
 import scripts
 from utility import Diagnostic
+from Dice import DiceData
+import time
 
 
 class UserInterface:
@@ -209,13 +211,12 @@ class Config:
         hardware.Display.write_display(["not defined yet", "please fix"])
 
 
-def get_keypress(ns):
-    while True:
-        ns.key_press = raw_input("enter key press")
-        print ns.key_press
+def update_keyboard(ui_interface, namespace):
 
+    def trigger_dice_loop(ns):
+        ns.dice_data = DiceData([0, 0, 0], False)
+        time.sleep(0.5)
 
-def update_keyboard(ui_interface):
     char = raw_input("input")
     if char == 'w':
         ui_interface.enter()
@@ -225,8 +226,27 @@ def update_keyboard(ui_interface):
         ui_interface.back()
     elif char == 'd':
         ui_interface.switch_right()
+    elif char == '1' and namespace.emulate_dice:
+        trigger_dice_loop(namespace)
+        namespace.dice_data = DiceData([-1, 0, 0], True)
+    elif char == '2' and namespace.emulate_dice:
+        trigger_dice_loop(namespace)
+        namespace.dice_data = DiceData([0, 0, -1], True)
+    elif char == '3' and namespace.emulate_dice:
+        trigger_dice_loop(namespace)
+        namespace.dice_data = DiceData([0, -1, 0], True)
+    elif char == '4' and namespace.emulate_dice:
+        trigger_dice_loop(namespace)
+        namespace.dice_data = DiceData([0, 1, 0], True)
+    elif char == '5' and namespace.emulate_dice:
+        trigger_dice_loop(namespace)
+        namespace.dice_data = DiceData([0, 0, 1], True)
+    elif char == '6' and namespace.emulate_dice:
+        trigger_dice_loop(namespace)
+        namespace.dice_data = DiceData([1, 0, 0], True)
     else:
-        print "Wrong Input, use w = Enter, s = back, a = left, d = right"
+        print "Wrong Input, use w = Enter, s = back, a = left, d = right", \
+            " or 1 to 6 to emulate dice input" if namespace.emulate_dice else ""
 
 
 def update_buttons(ui_interface, channel):

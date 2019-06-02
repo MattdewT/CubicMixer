@@ -38,7 +38,8 @@ def setup_buttons(ns, ui):
 
 
 def clean_up():
-    GPIO.cleanup()
+    if platform.system() == "Linux":
+        GPIO.cleanup()
     
 
 def set_pinmode(pin, mode):

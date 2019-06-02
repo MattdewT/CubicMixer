@@ -1,5 +1,6 @@
 import scripts
 import os
+import sys
 from utility import Diagnostic
 import hardware
 from utility.Mixer import Mixer
@@ -16,33 +17,46 @@ def dice_loop(namespace, cube_changed):
         # -------------------------------------------- slow down dice loop ---------------------------------------------
         time.sleep(0.2)
         # ------------------------------------------- get dice rolls ---------------------------------------------------
-        if not namespace.dice_data.is_rolling:
+        if not namespace.dice_data.is_not_rolling:
             cube_changed = True
             namespace.em.call_event("dice_rolling", 1)
 
-        if cube_changed and namespace.dice_data.is_rolling:
+        if cube_changed and namespace.dice_data.is_not_rolling:
             cube_changed = False
 
-            dice_roll_number = str(Dice.convert_to_dice_numbers(namespace.dice_data.orientation))
+            dice_roll_number = Dice.convert_to_dice_numbers(namespace.dice_data.orientation)
 
-            print namespace.dice_data.orientation, namespace.dice_data.is_rolling, dice_roll_number
+            print namespace.dice_data.orientation, namespace.dice_data.is_not_rolling, str(dice_roll_number)
             namespace.em.call_event("dice_rolled", 1, dice_roll_number)
 
 
 def ui_loop(namespace, ui):
 
     while namespace.running:
-        # -------------------------------------------- slow down ui loop ---------------------------------------------
-        time.sleep(0.2)
-        # ------------------------------------------- update ui ---------------------------------------------------
-        utility.UI.update_keyboard(ui)
+        if namespace.keyboard_input:
+            # -------------------------------------------- slow down ui loop -------------------------------------------
+            time.sleep(0.2)
+            # ------------------------------------------- update ui ---------------------------------------------------
+            utility.UI.update_keyboard(ui, namespace)
 
 
 if __name__ == "__main__":
+
     # --------------------------------------- setup multiprocessing namespace -----------------------------
 
     mgr = Manager()
     ns = mgr.Namespace()
+
+    # --------------------------------------- parse script parameters -----------------------------
+
+    ns.keyboard_input = False
+    ns.emulate_dice = False
+
+    for args in sys.argv:
+        if args == 'd':
+            ns.emulate_dice = True
+        elif args == 'k':
+            ns.keyboard_input = True
 
     # --------------------------------------------- event manager -----------------------------------------------------
 
@@ -53,8 +67,7 @@ if __name__ == "__main__":
     hardware.IO.setup_gpio_configuration()
     display = hardware.Display.Display()
     display.setup()
-    hardware.Display.write_display = display.write_display_fct
-    
+
     ns.em.call_event("start_up", 1)
     
     # --------------------------------- load and check scripts ------------------------------------
@@ -79,6 +92,7 @@ if __name__ == "__main__":
     print scripts.library.recipes_list
     print Diagnostic.separator_str
 
+    ns.em.call_event("scripts_loaded", 1, len(scripts.library.ingredients_dict), len(scripts.library.recipes_list))
     # --------------------------------- setup mixer and valve controller ------------------------------------
 
     mixer = Mixer()

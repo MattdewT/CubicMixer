@@ -5,14 +5,12 @@ from multiprocessing import Lock
 if not platform.system() == "Windows":
     import LCD1602
 
-write_display = None
 
 # input [first_line (String), second_line (String)]
 class Display:
     
     def __init__(self):
         self.lock_ = Lock()
-
 
     def write_display_fct(self, msg):        # ToDO proper checking and structering
         if len(msg[0]) > 16 or len(msg[1]) > 16:
@@ -34,4 +32,7 @@ class Display:
         else:
             LCD1602.init(0x27, 1)    # init(slave address, background light)
             time.sleep(2)
-    
+
+
+write_display = Display().write_display_fct
+
