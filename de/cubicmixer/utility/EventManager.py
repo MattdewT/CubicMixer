@@ -48,10 +48,6 @@ class EventManger:
         hardware.Display.write_display(["Cube", "disconnected"])
 
     @staticmethod
-    def handle_event_scripts_loaded():
-        hardware.Display.write_display(["Script loading", "Done"])
-
-    @staticmethod
     def handle_event_waiting_for_input():
         hardware.Display.write_display(["press Enter or ", "roll the dice"])
 

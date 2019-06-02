@@ -183,7 +183,7 @@ class UserInterface:
         self.UITree.go_to_root()
         self.UITree.descend(4)
         for recipe in scripts.library.recipes_list:
-            self.UITree.add_node(LeafNode([recipe.name, ""], self.config.stuff()))
+            self.UITree.add_node(LeafNode([recipe.name, ""], self.config.stuff))
 
 
 class Config:

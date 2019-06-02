@@ -30,6 +30,10 @@ class Library:
         else:
             self.ingredients_dict[entry[0]] = [entry[1]]
 
+    def get_recipe_by_position(self, position):
+        print position
+        return self.recipes_list[position]
+
 
 def check_recipe_volume(recipe):
     total_volume = 0

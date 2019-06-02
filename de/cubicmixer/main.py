@@ -10,7 +10,9 @@ import Dice
 import time
 
 
-def dice_loop(namespace, cube_changed):
+def dice_loop(namespace, mixer_, library, valve_controller):
+
+    cube_changed = False
 
     while namespace.running:
 
@@ -28,6 +30,8 @@ def dice_loop(namespace, cube_changed):
 
             print namespace.dice_data.orientation, namespace.dice_data.is_not_rolling, str(dice_roll_number)
             namespace.em.call_event("dice_rolled", 1, dice_roll_number)
+
+            valve_controller.open_valves(mixer_.mix_drink(library.recipes_list[mixer_.chose_recipe(dice_roll_number, library)], library))
 
 
 def ui_loop(namespace, ui):
@@ -95,7 +99,7 @@ if __name__ == "__main__":
     ns.em.call_event("scripts_loaded", 1, len(scripts.library.ingredients_dict), len(scripts.library.recipes_list))
     # --------------------------------- setup mixer and valve controller ------------------------------------
 
-    mixer = Mixer()
+    mixer = Mixer(scripts.library)
     hardware.ValveMaster.vc = hardware.ValveMaster.setup_valve_controller()
 
     # --------------------------------- dice connection process setup ------------------------------------
@@ -106,9 +110,7 @@ if __name__ == "__main__":
     p = Process(target=Dice.run, args=(ns, ))
     p.start()
 
-    cubed_changed = False
-
-    d = Process(target=dice_loop, args=(ns, cubed_changed))
+    d = Process(target=dice_loop, args=(ns, mixer, scripts.library, hardware.ValveMaster.vc))
     d.start()
 
     # --------------------------------- setup UI ------------------------------------
@@ -127,10 +129,6 @@ if __name__ == "__main__":
     print Diagnostic.separator_str
 
     print Diagnostic.separator_str
-
-    # ---------------------------------  ------------------------------------
-
-    hardware.ValveMaster.vc.open_valves(mixer.mix_drink(scripts.library.recipes_list[0]))
 
     # --------------------------------- main loop ------------------------------------
 
