@@ -3,4 +3,4 @@ is
 Rot Ventil 1
 Blau Ventil 2
 Gelb Ventil 3
-Schwarz Ventil 4
+Blau Ventil 4

@@ -43,8 +43,8 @@ import time
 
 class UserInterface:
 
-    def __init__(self, namespace):
-        self.config = Config(namespace)
+    def __init__(self, config):
+        self.config = config
         self.UITree = Tree()
         self.setup_tree()
         self.current_position = 0
@@ -162,12 +162,12 @@ class UserInterface:
 
         self.UITree.descend(0)
         for ingredient in scripts.library.ingredients_dict:
-            self.UITree.add_node(LeafNode([ingredient, ""], self.config.stuff))
+            self.UITree.add_node(LeafNode([ingredient, ""], self.config.test_valve_by_ingredient, ingredient))
 
         self.UITree.ascend()
         self.UITree.descend(1)
         for position in hardware.ValveMaster.vc.valve_dict:
-            self.UITree.add_node(LeafNode([str(position), ""], self.config.stuff))
+            self.UITree.add_node(LeafNode([str(position), ""], self.config.test_valve_by_position, position))
 
         self.UITree.add_node_to_root(Node(["Dice", ""], False))
         self.UITree.go_to_root()
@@ -188,22 +188,24 @@ class UserInterface:
 
 class Config:
 
-    def __init__(self, ns):
+    def __init__(self, ns, valve_controller, library):
         self.menu_long = True
-        self.mix_by_recipes = True
         self.ns = ns
+        self.ns.mix_by_recipes = True
+        self.library = library
+        self.valve_controller = valve_controller
 
     @staticmethod
     def print_to_display(msg):
         hardware.Display.write_display(msg)
 
-    def set_menu_mode(self, is_long):
-        self.menu_long = is_long
-        print Diagnostic.debug_str + "set menu to detailed view: " + str(is_long) + Diagnostic.bcolors.ENDC
+    def set_menu_mode(self, args):
+        self.menu_long = args[0]
+        print Diagnostic.debug_str + "set menu to detailed view: " + str(args[0]) + Diagnostic.bcolors.ENDC
 
-    def set_operation_mode(self, by_recipe):
-        self.mix_by_recipes = by_recipe
-        print Diagnostic.debug_str + "set mixing mode by recipe: " + str(by_recipe) + Diagnostic.bcolors.ENDC
+    def set_operation_mode(self, args):
+        self.ns.mix_by_recipes = args[0]
+        print Diagnostic.debug_str + "set mixing mode by recipe: " + str(args[0]) + Diagnostic.bcolors.ENDC
 
     @staticmethod
     def display_msg(msg):
@@ -216,6 +218,13 @@ class Config:
     @staticmethod
     def ping():
         print Diagnostic.debug_str + "Pinging" + Diagnostic.bcolors.ENDC
+
+    def test_valve_by_position(self, args):
+        self.valve_controller.open_valves({args[0]: 10})
+
+    def test_valve_by_ingredient(self, args):
+        for valve in self.library.ingredients_dict[args[0]]:
+            self.valve_controller.open_valves({valve: 10})
 
     # ToDo: Remove function
     @staticmethod

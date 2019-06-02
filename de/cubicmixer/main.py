@@ -31,7 +31,7 @@ def dice_loop(namespace, mixer_, library, valve_controller):
             print namespace.dice_data.orientation, namespace.dice_data.is_not_rolling, str(dice_roll_number)
             namespace.em.call_event("dice_rolled", 1, dice_roll_number)
 
-            valve_controller.open_valves(mixer_.mix_drink(library.recipes_list[mixer_.chose_recipe(dice_roll_number, library)], library))
+            valve_controller.open_valves(mixer_.handle_dice_roll(dice_roll_number, namespace.mix_by_recipes, library))
 
 
 def ui_loop(namespace, ui):
@@ -102,6 +102,23 @@ if __name__ == "__main__":
     mixer = Mixer(scripts.library)
     hardware.ValveMaster.vc = hardware.ValveMaster.setup_valve_controller()
 
+    # --------------------------------- setup UI ------------------------------------
+
+    print Diagnostic.separator_str
+
+    UI_ = utility.UI.UserInterface(utility.UI.Config(ns, hardware.ValveMaster.vc, scripts.library))
+
+    UI_.UITree.print_tree()
+
+    UI_.UITree.go_to_root()
+    UI_.UITree.descend(0)
+
+    hardware.IO.setup(ns, UI_)
+
+    print Diagnostic.separator_str
+
+    print Diagnostic.separator_str
+
     # --------------------------------- dice connection process setup ------------------------------------
 
     ns.dice_data = Dice.DiceData([0, 0, 0], True)
@@ -113,26 +130,9 @@ if __name__ == "__main__":
     d = Process(target=dice_loop, args=(ns, mixer, scripts.library, hardware.ValveMaster.vc))
     d.start()
 
-    # --------------------------------- setup UI ------------------------------------
-
-    print Diagnostic.separator_str
-
-    TestUI = utility.UI.UserInterface(ns)
-
-    TestUI.UITree.print_tree()
-
-    TestUI.UITree.go_to_root()
-    TestUI.UITree.descend(0)
-    
-    hardware.IO.setup(ns, TestUI)
-
-    print Diagnostic.separator_str
-
-    print Diagnostic.separator_str
-
     # --------------------------------- main loop ------------------------------------
 
-    ui_loop(ns, TestUI)
+    ui_loop(ns, UI_)
 
     # ---------------------------------------- clean up and shutdown ---------------------------------------------------
 

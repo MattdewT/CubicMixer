@@ -1,4 +1,3 @@
-import abc
 import CustomValve
 
 
@@ -11,18 +10,20 @@ class ValveController:
         self.valve_dict[valve_to_add.get_position()] = valve_to_add
 
     def open_valves(self, order_dict):          #ToDo Proper naming
+        print order_dict
         for key in order_dict:
             self.valve_dict[key].open(order_dict[key])
 
 
 def setup_valve_controller():
-    vc = ValveController()
+    vc_ = ValveController()
 
     valve_list = CustomValve.setup_valve()
 
     for valves in valve_list:
-        vc.add_valve(valves)
+        vc_.add_valve(valves)
 
-    return vc
+    return vc_
+
 
 vc = None
