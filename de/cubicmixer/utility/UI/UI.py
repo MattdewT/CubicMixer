@@ -157,8 +157,17 @@ class UserInterface:
         self.UITree.add_node(Node(["test valves", ""], False))
 
         self.UITree.descend(1)
-        self.UITree.add_node(LeafNode(["chose by", "ingredient"], self.config.stuff))
-        self.UITree.add_node(LeafNode(["chose by", "position"], self.config.stuff))
+        self.UITree.add_node(Node(["chose by", "ingredient"], False))
+        self.UITree.add_node(Node(["chose by", "position"], False))
+
+        self.UITree.descend(0)
+        for ingredient in scripts.library.ingredients_dict:
+            self.UITree.add_node(LeafNode([ingredient, ""], self.config.stuff))
+
+        self.UITree.ascend()
+        self.UITree.descend(1)
+        for position in hardware.ValveMaster.vc.valve_dict:
+            self.UITree.add_node(LeafNode([str(position), ""], self.config.stuff))
 
         self.UITree.add_node_to_root(Node(["Dice", ""], False))
         self.UITree.go_to_root()
@@ -170,7 +179,11 @@ class UserInterface:
         self.UITree.add_node(LeafNode(["Status", ""], self.config.stuff))
         self.UITree.add_node(LeafNode(["Ping", ""], self.config.stuff))
 
-        self.UITree.add_node_to_root(LeafNode(["Chose Drink", ""], self.config.stuff))
+        self.UITree.add_node_to_root(Node(["Chose Drink", ""], False))
+        self.UITree.go_to_root()
+        self.UITree.descend(4)
+        for recipe in scripts.library.recipes_list:
+            self.UITree.add_node(LeafNode([recipe.name, ""], self.config.stuff()))
 
 
 class Config:

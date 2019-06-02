@@ -25,3 +25,4 @@ def setup_valve_controller():
 
     return vc
 
+vc = None
