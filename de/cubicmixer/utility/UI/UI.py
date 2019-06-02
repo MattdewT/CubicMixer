@@ -118,36 +118,36 @@ class UserInterface:
         self.UITree.add_node(Node(["Loaded Script", "Information"], False))
 
         self.UITree.descend(0)
-        self.UITree.add_node(LeafNode(["Loaded Scipts", ""], self.config.display_msg, [str(Diagnostic.loaded_scripts), "Scripts loaded"]))
-        self.UITree.add_node(LeafNode(["Loaded Recipes", ""],  self.config.display_msg, [str(len(scripts.library.recipes_list)), "Recipes loaded"]))
-        self.UITree.add_node(LeafNode(["Loaded Ingredients", ""],  self.config.display_msg, [str(len(scripts.library.ingredients_dict)), "Ingredients loaded"]))
+        self.UITree.add_node(LeafNode([str(Diagnostic.loaded_scripts), "Script(s) loaded"], self.config.nothing))
+        self.UITree.add_node(LeafNode([str(len(scripts.library.recipes_list)), "Recipe(s) loaded"],  self.config.nothing))
+        self.UITree.add_node(LeafNode([str(len(scripts.library.ingredients_dict)), "Ingredient(s) loaded"],  self.config.nothing))
 
         self.UITree.ascend()
         self.UITree.add_node(Node(["Discarded Information", ""], True))
 
         self.UITree.descend(1)
-        self.UITree.add_node(LeafNode(["Discarded Scripts", ""], self.config.stuff))
-        self.UITree.add_node(LeafNode(["Discarded Recipes", ""], self.config.stuff))
-        self.UITree.add_node(LeafNode(["Discarded Ingredients", ""], self.config.stuff))
+        self.UITree.add_node(LeafNode([str(Diagnostic.unloaded_scripts), "Discarded Scripts"], self.config.nothing))
+        self.UITree.add_node(LeafNode([str(Diagnostic.discarded_recipe), "Discarded Recipes"], self.config.nothing))
+        self.UITree.add_node(LeafNode([str(Diagnostic.discarded_ingredients), "Discarded Ingredients"], self.config.nothing))
 
         self.UITree.ascend()
         self.UITree.add_node(Node(["Version", ""], False))
 
         self.UITree.descend(2)
-        self.UITree.add_node(LeafNode(["version 4.2", ""], self.config.stuff))
+        self.UITree.add_node(LeafNode(["version 4.2", ""], self.config.nothing))
 
         self.UITree.ascend()
         self.UITree.add_node(Node(["Developer", ""], False))
 
         self.UITree.descend(3)
-        self.UITree.add_node(LeafNode(["MathDew", ""], self.config.stuff))
-        self.UITree.add_node(LeafNode(["TimDew", ""], self.config.stuff))
+        self.UITree.add_node(LeafNode(["MathDew", ""], self.config.nothing))
+        self.UITree.add_node(LeafNode(["TimDew", ""], self.config.nothing))
 
         self.UITree.ascend()
         self.UITree.add_node(Node(["Help", ""], False))
 
         self.UITree.descend(4)
-        self.UITree.add_node(LeafNode(["Github:", "MattdewT/CubicMixer"], self.config.stuff))
+        self.UITree.add_node(LeafNode(["Github", "Repository"], self.config.display_msg, ["MattdewT", "CubicMixer"]))
 
         self.UITree.add_node_to_root(Node(["Maintenance", ""], True))
         self.UITree.go_to_root()
@@ -169,7 +169,7 @@ class UserInterface:
         for position in hardware.ValveMaster.vc.valve_dict:
             self.UITree.add_node(LeafNode([str(position), ""], self.config.test_valve_by_position, position))
 
-        self.UITree.add_node_to_root(Node(["Dice", ""], False))
+        self.UITree.add_node_to_root(Node(["Dice", ""], False))     # ToDo rework Dice UI
         self.UITree.go_to_root()
         self.UITree.descend(3)
 
@@ -183,17 +183,18 @@ class UserInterface:
         self.UITree.go_to_root()
         self.UITree.descend(4)
         for recipe in scripts.library.recipes_list:
-            self.UITree.add_node(LeafNode([recipe.name, ""], self.config.stuff))
+            self.UITree.add_node(LeafNode([recipe.name, ""], self.config.mix_drink, recipe))
 
 
 class Config:
 
-    def __init__(self, ns, valve_controller, library):
+    def __init__(self, ns, valve_controller, library, mixer):
         self.menu_long = True
         self.ns = ns
         self.ns.mix_by_recipes = True
         self.library = library
         self.valve_controller = valve_controller
+        self.mixer = mixer
 
     @staticmethod
     def print_to_display(msg):
@@ -225,6 +226,13 @@ class Config:
     def test_valve_by_ingredient(self, args):
         for valve in self.library.ingredients_dict[args[0]]:
             self.valve_controller.open_valves({valve: 10})
+
+    def mix_drink(self, args):
+        self.valve_controller.open_valves(self.mixer.mix_drink_recipe(args[0], self.library))
+
+    @staticmethod
+    def nothing():
+        pass
 
     # ToDo: Remove function
     @staticmethod

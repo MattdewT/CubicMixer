@@ -106,7 +106,7 @@ if __name__ == "__main__":
 
     print Diagnostic.separator_str
 
-    UI_ = utility.UI.UserInterface(utility.UI.Config(ns, hardware.ValveMaster.vc, scripts.library))
+    UI_ = utility.UI.UserInterface(utility.UI.Config(ns, hardware.ValveMaster.vc, scripts.library, mixer))
 
     UI_.UITree.print_tree()
 
