@@ -130,10 +130,11 @@ def setup_wireless_connection(ns):
         
     while not cube_connected:
         line = ser.readline()
+        line.rstrip()
         print line
-        if line == "SSID\n":
+        if line == "SSID\r\n":
             ser.write(wlan_ssid)
-        elif line == "Password\n":
+        elif line == "Password\r\n":
             ser.write(wlan_password)
         elif len(line.split(" ")) > 2:
             cube_connected = True
