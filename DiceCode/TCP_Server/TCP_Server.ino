@@ -39,12 +39,16 @@ void setup() {
  
   Serial.begin(115200);
 
+  ESP.wdtDisable();
+  ESP.wdtFeed();
+
   delay(1000);
   
   Serial.println();
   Serial.println("SSID");
   boolean ssid_fetched = false;
   while(!ssid_fetched) {
+    ESP.wdtFeed();
     if(Serial.available()) {
       ssid = Serial.readString();
       ssid.trim();
@@ -55,6 +59,7 @@ void setup() {
   Serial.println("Password");
   boolean passwd_fetched = false;
   while(!passwd_fetched) {
+    ESP.wdtFeed();
     if(Serial.available()) {
       password = Serial.readString();
       password.trim();
@@ -65,9 +70,6 @@ void setup() {
   Serial.println(ssid + " : " + password);
  
   delay(1000);
-
-  ESP.wdtDisable();
-  ESP.wdtFeed();
 
   Wire.begin(sda, scl);
   MPU6050_Init();
