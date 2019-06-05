@@ -117,9 +117,12 @@ def get_serial_connection(ns):
     return ser
 
 
-def get_ip_of_dice(ns):
+def setup_wireless_connection(ns):
     ip = None
     cube_connected = False
+
+    wlan_ssid = ""
+    wlan_password = ""
 
     ser = get_serial_connection(ns)
 
@@ -128,7 +131,11 @@ def get_ip_of_dice(ns):
     while not cube_connected:
         line = ser.readline()
         print line
-        if len(line.split(" ")) > 2:
+        if line == "SSID\n":
+            ser.write(wlan_ssid)
+        elif line == "Password\n":
+            ser.write(wlan_password)
+        elif len(line.split(" ")) > 2:
             cube_connected = True
             ip_raw = str(line.split("IP:")[1])
             ip = ip_raw.rstrip()
@@ -143,7 +150,7 @@ def run(ns):
     if ns.emulate_dice:
         return
     
-    TCP_IP = get_ip_of_dice(ns)
+    TCP_IP = setup_wireless_connection(ns)
         
     TCP_PORT = 80
     BUFFER_SIZE = 1024
