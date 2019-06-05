@@ -22,6 +22,12 @@ class Dice:
         self.old_values = [0, 0, 0]
         self.delta = [0, 0, 0]
 
+    def reset_cube(self, c):
+        self.idle_counter = 5
+        self.parse_content(c)
+        self.calculate_delta()
+        self.delta = [0, 0, 0]
+
     def parse_content(self, c):
         array = c.split(" ")
         ax = float(array[1])
@@ -121,8 +127,8 @@ def setup_wireless_connection(ns):
     ip = None
     cube_connected = False
 
-    wlan_ssid = ""
-    wlan_password = ""
+    wlan_ssid = "dew"
+    wlan_password = "dew"
 
     ser = get_serial_connection(ns)
 
@@ -165,20 +171,20 @@ def run(ns):
             s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             s.settimeout(5)                                # socket timeout
             s.connect((TCP_IP, TCP_PORT))
+            data = s.recv(BUFFER_SIZE)
 
             if dice_connected_first_time:
                 print Diagnostic.debug_str + "Dice connected" + Diagnostic.bcolors.ENDC
                 dice_connected_first_time = False
                 ns.em.call_event("cube_connected", 0)
+                d.reset_cube(data)
+            else:
+                d.parse_content(data)
+                d.calculate_delta()
+                d.cube_idle_counter()
+                ns.dice_data = d.get_current_dice_roll_object()
 
-            data = s.recv(BUFFER_SIZE)
-
-            d.parse_content(data)
-            d.calculate_delta()
-            d.cube_idle_counter()
-            ns.dice_data = d.get_current_dice_roll_object()
-
-            s.close()
+                s.close()
         except socket.timeout:
             if not dice_connected_first_time:
                 print Diagnostic.debug_str + "Dice disconnected" + Diagnostic.bcolors.ENDC
