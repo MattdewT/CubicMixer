@@ -27,14 +27,40 @@ const uint8_t MPU6050_REGISTER_SIGNAL_PATH_RESET  = 0x68;
 
 int16_t AccelX, AccelY, AccelZ, Temperature, GyroX, GyroY, GyroZ;
  
-char* ssid = "DewNet+";
-char* password =  "dewdewdew";
+//char* ssid = "DewNet+";
+//char* password =  "dewdewdew";
  
 WiFiServer wifiServer(80);
  
 void setup() {
+
+  String ssid;
+  String password;
  
   Serial.begin(115200);
+  
+  Serial.println();
+  Serial.println("SSID");
+  boolean ssid_fetched = false;
+  while(!ssid_fetched) {
+    if(Serial.available()) {
+      ssid = Serial.readString();
+      ssid.trim();
+      ssid_fetched = true;
+    }
+  }
+  
+  Serial.println("Password");
+  boolean passwd_fetched = false;
+  while(!passwd_fetched) {
+    if(Serial.available()) {
+      password = Serial.readString();
+      password.trim();
+      passwd_fetched = true;
+    }
+  }
+
+  Serial.println(ssid + " : " + password);
  
   delay(1000);
 
