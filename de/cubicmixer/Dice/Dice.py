@@ -137,9 +137,10 @@ def setup_wireless_connection(ns):
         elif line == "Password\r\n":
             ser.write(wlan_password)
         elif len(line.split(" ")) > 2:
-            cube_connected = True
-            ip_raw = str(line.split("IP:")[1])
-            ip = ip_raw.rstrip()
+            if len(line.split("IP:")) > 1:
+                cube_connected = True
+                ip_raw = str(line.split("IP:")[1])
+                ip = ip_raw.rstrip()
     
     ns.em.call_event("cube_configured")
 
