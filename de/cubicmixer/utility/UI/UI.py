@@ -79,14 +79,15 @@ class UserInterface:
 
         self.update_display()
 
+
     def enter(self):
-        is_leaf_node = True if isinstance(self.UITree.current_node, LeafNode) else False
+        is_leaf_node = True if isinstance(self.UITree.current_node, LeafNode) else False				# enter
         self.current_position = 0
         self.UITree.descend(self.current_position)
         if not is_leaf_node:
             self.update_display()
 
-    def back(self):
+    def back(self):                                                                                     # Action Back
         self.UITree.ascend()
         self.update_display()
 
@@ -95,70 +96,74 @@ class UserInterface:
 
     def setup_tree(self):
 
-        self.UITree.add_node_to_root(Node(["Setup", ""], False))
+        self.UITree.add_node_to_root(Node(["Setup", ""], False))                                        # Initialising Menu Setup 
 
         self.UITree.descend(0)
-        self.UITree.add_node(Node(["Menumode", ""], False))
+        self.UITree.add_node(Node(["Menumode", ""], False))                                             # Initialising Submenu Menumode
 
         self.UITree.descend(0)
-        self.UITree.add_node(LeafNode(["True", ""], self.config.set_menu_mode, True))
-        self.UITree.add_node(LeafNode(["False", ""], self.config.set_menu_mode, False))
+        self.UITree.add_node(LeafNode(["True", ""], self.config.set_menu_mode, True))                   # Menumode long
+        self.UITree.add_node(LeafNode(["False", ""], self.config.set_menu_mode, False))                 # Menumode short
 
         self.UITree.ascend()
-        self.UITree.add_node(Node(["Operationmode", ""], False))
+        self.UITree.add_node(Node(["Operationmode", ""], False))                                        # Initialising Submenu Operationmode
 
         self.UITree.descend(1)
-        self.UITree.add_node(LeafNode(["Recipe", ""], self.config.set_operation_mode, True))
-        self.UITree.add_node(LeafNode(["Ingredient", ""], self.config.set_operation_mode, False))
+        self.UITree.add_node(LeafNode(["Recipe", ""], self.config.set_operation_mode, True))            # Operationmode Recipe
+        self.UITree.add_node(LeafNode(["Ingredient", ""], self.config.set_operation_mode, False))       # Operationmode Ingredient
 
-        self.UITree.add_node_to_root(Node(["Info", ""], False))
+        self.UITree.add_node_to_root(Node(["Info", ""], False))                                         # Initialising Menu Info
         self.UITree.go_to_root()
         self.UITree.descend(1)
 
-        self.UITree.add_node(Node(["Loaded Script", "Information"], False))
+        self.UITree.add_node(Node(["Loaded Script", "Information"], False))								# Initialising Submenu Loaded Script Information
 
         self.UITree.descend(0)
-        self.UITree.add_node(LeafNode([str(Diagnostic.loaded_scripts), "Script(s) loaded"], self.config.nothing))
-        self.UITree.add_node(LeafNode([str(len(scripts.library.recipes_list)), "Recipe(s) loaded"],  self.config.nothing))
-        self.UITree.add_node(LeafNode([str(len(scripts.library.ingredients_dict)), "Ingredient(s) loaded"],  self.config.nothing))
+        self.UITree.add_node(LeafNode([str(Diagnostic.loaded_scripts), "Script(s) loaded"], self.config.nothing))					# LSI Loaded Scripts
+        self.UITree.add_node(LeafNode([str(len(scripts.library.recipes_list)), "Recipe(s) loaded"],  self.config.nothing))			# LSI Loaded Recipes
+        self.UITree.add_node(LeafNode([str(len(scripts.library.ingredients_dict)), "Ingredient(s) loaded"],  self.config.nothing))	# LSI Loaded Ingredients
 
         self.UITree.ascend()
-        self.UITree.add_node(Node(["Discarded Information", ""], True))
+        self.UITree.add_node(Node(["Discarded Information", ""], True))                                 # Initialising Submenu Discarded Information
 
         self.UITree.descend(1)
-        self.UITree.add_node(LeafNode([str(Diagnostic.unloaded_scripts), "Discarded Scripts"], self.config.nothing))
-        self.UITree.add_node(LeafNode([str(Diagnostic.discarded_recipe), "Discarded Recipes"], self.config.nothing))
-        self.UITree.add_node(LeafNode([str(Diagnostic.discarded_ingredients), "Discarded Ingredients"], self.config.nothing))
+
+        self.UITree.add_node(LeafNode([str(Diagnostic.unloaded_scripts), "Discarded Scripts"], self.config.nothing))				# DI Discarded Scripts
+        self.UITree.add_node(LeafNode([str(Diagnostic.discarded_recipe), "Discarded Recipes"], self.config.nothing))				# DI Discarded Recipes
+        self.UITree.add_node(LeafNode([str(Diagnostic.discarded_ingredients), "Discarded Ingredients"], self.config.nothing))		# DI Discarded Ingredients
 
         self.UITree.ascend()
-        self.UITree.add_node(Node(["Version", ""], False))
+        self.UITree.add_node(Node(["Version", ""], False))                                              # Initialising Submenu Version
 
         self.UITree.descend(2)
-        self.UITree.add_node(LeafNode(["version 4.2", ""], self.config.nothing))
+
+        self.UITree.add_node(LeafNode(["version 4.2", ""], self.config.nothing))						# Version 4.2
 
         self.UITree.ascend()
-        self.UITree.add_node(Node(["Developer", ""], False))
+        self.UITree.add_node(Node(["Developer", ""], False))                                            # Initialising Submenu Developer
 
         self.UITree.descend(3)
-        self.UITree.add_node(LeafNode(["MathDew", ""], self.config.nothing))
-        self.UITree.add_node(LeafNode(["TimDew", ""], self.config.nothing))
+
+        self.UITree.add_node(LeafNode(["MathDew", ""], self.config.nothing))							# Developer MathDew
+        self.UITree.add_node(LeafNode(["TimDew", ""], self.config.nothing))								# Developer Timdew
 
         self.UITree.ascend()
-        self.UITree.add_node(Node(["Help", ""], False))
+        self.UITree.add_node(Node(["Help", ""], False))                                                 # Initialising Submenu Help
 
         self.UITree.descend(4)
-        self.UITree.add_node(LeafNode(["Github", "Repository"], self.config.display_msg, ["MattdewT", "CubicMixer"]))
 
-        self.UITree.add_node_to_root(Node(["Maintenance", ""], True))
+        self.UITree.add_node(LeafNode(["Github", "Repository"], self.config.display_msg, ["MattdewT", "CubicMixer"]))		# Help Github : MattdewT/Cubicmixer
+
+        self.UITree.add_node_to_root(Node(["Maintenance", ""], True))                                   # Initialising Menu Maintenance
         self.UITree.go_to_root()
         self.UITree.descend(2)
 
-        self.UITree.add_node(LeafNode(["reboot", ""], self.config.reboot))
-        self.UITree.add_node(Node(["test valves", ""], False))
+        self.UITree.add_node(LeafNode(["reboot", ""], self.config.reboot))								# Maintenance reboot
+        self.UITree.add_node(Node(["test valves", ""], False))											# Initialising Submenu test valves
 
         self.UITree.descend(1)
-        self.UITree.add_node(Node(["chose by", "ingredient"], False))
-        self.UITree.add_node(Node(["chose by", "position"], False))
+        self.UITree.add_node(Node(["chose by", "ingredient"], False))									# tv chose by ingredient
+        self.UITree.add_node(Node(["chose by", "position"], False))										# tv chose by position
 
         self.UITree.descend(0)
         for ingredient in scripts.library.ingredients_dict:
@@ -169,22 +174,22 @@ class UserInterface:
         for position in hardware.ValveMaster.vc.valve_dict:
             self.UITree.add_node(LeafNode([str(position), ""], self.config.test_valve_by_position, position))
 
-        self.UITree.add_node_to_root(Node(["Dice", ""], False))     # ToDo rework Dice UI
+        self.UITree.add_node_to_root(Node(["Dice", ""], False))     # ToDo rework Dice UI				# Initialising Menu Dice
+
         self.UITree.go_to_root()
         self.UITree.descend(3)
 
-        self.UITree.add_node(Node(["Connection", "Status"], False))
+        self.UITree.add_node(Node(["Connection", "Status"], False))                                     # Initialising Submenu Connection Status
 
         self.UITree.descend(0)
-        self.UITree.add_node(LeafNode(["Status", ""], self.config.stuff))
-        self.UITree.add_node(LeafNode(["Ping", ""], self.config.stuff))
+        self.UITree.add_node(LeafNode(["Status", ""], self.config.stuff))                               # CS Status
+        self.UITree.add_node(LeafNode(["Ping", ""], self.config.stuff))                                 # CS Ping
 
-        self.UITree.add_node_to_root(Node(["Chose Drink", ""], False))
+        self.UITree.add_node_to_root(Node(["Chose Drink", ""], False))									# Initialising Menu Chose Drink
         self.UITree.go_to_root()
         self.UITree.descend(4)
         for recipe in scripts.library.recipes_list:
             self.UITree.add_node(LeafNode([recipe.name, ""], self.config.mix_drink, recipe))
-
 
 class Config:
 
