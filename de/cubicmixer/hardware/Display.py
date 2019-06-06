@@ -6,20 +6,30 @@ if not platform.system() == "Windows":
     import LCD1602
 
 
-# input [first_line (String), second_line (String)]
 class Display:
+    """
+    Display class serves the purpose, to initialise the hardware and handle writing to the lcd. The primary goal was to
+    make the display threading safe.
+    """
     
     def __init__(self):
         self.lock_ = Lock()
+        self.setup()
 
-    def write_display_fct(self, msg):        # ToDO proper checking and structering
+    def write_display_fct(self, msg):        
+        """
+        
+        :param msg: needs to be a list, with two entries in String format, the first entry represents the first line of 
+                    the display and the second the second ine of the display
+        :raises a warning when the message is longer than the display can show (16 characters per line)
+        """
         if len(msg[0]) > 16 or len(msg[1]) > 16:
             print Diagnostic.debug_str + "message to long to diplay on lcd: ", msg, Diagnostic.bcolors.ENDC
         print Diagnostic.display_str + msg[0] + Diagnostic.bcolors.ENDC
         print Diagnostic.display_str + msg[1] + Diagnostic.bcolors.ENDC
     
         self.lock_.acquire(True)
-        if not platform.system() == "Windows":          # ToDo: Lock doesnt work
+        if not platform.system() == "Windows":
             LCD1602.clear()
             LCD1602.write(0, 0, msg[0])
             LCD1602.write(0, 1, msg[1])
@@ -34,5 +44,7 @@ class Display:
             time.sleep(2)
 
 
-write_display = Display().write_display_fct
-
+write_display = None  # type: Display().write_display_fct()
+"""
+write_display is used as an static reference, so it can be called from every position in the script
+"""

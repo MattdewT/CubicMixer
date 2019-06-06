@@ -116,8 +116,8 @@ if __name__ == "__main__":
     # --------------------------------- hardware setup ------------------------------------
     
     hardware.IO.setup_gpio_configuration()
-    display = hardware.Display.Display()
-    display.setup()
+    display = hardware.Display.Display()                                            # generate display instance
+    hardware.Display.write_display = display.write_display_fct                      # look up /hardware/Display.py for further explanation
 
     ns.em.call_event("start_up", 1)
     
