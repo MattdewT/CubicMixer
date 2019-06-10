@@ -5,7 +5,7 @@ class ValveInterface:
     __metaclass__ = abc.ABCMeta
 
     @abc.abstractmethod
-    def open(self):
+    def open(self, volume):
         raise NotImplementedError
 
     @abc.abstractmethod
