@@ -79,7 +79,6 @@ class UserInterface:
 
         self.update_display()
 
-
     def enter(self):
         is_leaf_node = True if isinstance(self.UITree.current_node, LeafNode) else False				# enter
         self.current_position = 0
@@ -171,7 +170,7 @@ class UserInterface:
 
         self.UITree.ascend()
         self.UITree.descend(1)
-        for position in hardware.ValveMaster.vc.valve_dict:
+        for position in self.config.ns.vc.valve_dict:
             self.UITree.add_node(LeafNode([str(position), ""], self.config.test_valve_by_position, position))
 
         self.UITree.add_node_to_root(Node(["Dice", ""], False))     # ToDo rework Dice UI				# Initialising Menu Dice
@@ -191,14 +190,14 @@ class UserInterface:
         for recipe in scripts.library.recipes_list:
             self.UITree.add_node(LeafNode([recipe.name, ""], self.config.mix_drink, recipe))
 
+
 class Config:
 
-    def __init__(self, ns, valve_controller, library, mixer):
+    def __init__(self, ns, library, mixer):
         self.menu_long = True
         self.ns = ns
         self.ns.mix_by_recipes = True
         self.library = library
-        self.valve_controller = valve_controller
         self.mixer = mixer
 
     @staticmethod
@@ -226,14 +225,20 @@ class Config:
         print Diagnostic.debug_str + "Pinging" + Diagnostic.bcolors.ENDC
 
     def test_valve_by_position(self, args):
-        self.valve_controller.open_valves({args[0]: 10})
+        vc = self.ns.vc
+        vc.open_valves({args[0]: 10})
+        self.ns.vc = vc
 
     def test_valve_by_ingredient(self, args):
         for valve in self.library.ingredients_dict[args[0]]:
-            self.valve_controller.open_valves({valve: 10})
+            vc = self.ns.vc
+            vc.open_valves({valve: 10})
+            self.ns.vc = vc
 
     def mix_drink(self, args):
-        self.valve_controller.open_valves(self.mixer.mix_drink_recipe(args[0], self.library))
+        vc = self.ns.vc
+        vc.open_valves(self.mixer.mix_drink_recipe(args[0], self.library))
+        self.ns.vc = vc
 
     @staticmethod
     def nothing():

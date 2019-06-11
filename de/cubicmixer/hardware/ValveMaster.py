@@ -1,6 +1,17 @@
 import CustomValve
 
 
+def setup_valve_controller():
+    vc_ = ValveController()
+
+    valve_list = CustomValve.setup_valve()
+
+    for valves in valve_list:
+        vc_.add_valve(valves)
+
+    return vc_
+
+
 class ValveController:
 
     def __init__(self):
@@ -14,16 +25,3 @@ class ValveController:
         for key in order_dict:
             self.valve_dict[key].open(order_dict[key])
 
-
-def setup_valve_controller():
-    vc_ = ValveController()
-
-    valve_list = CustomValve.setup_valve()
-
-    for valves in valve_list:
-        vc_.add_valve(valves)
-
-    return vc_
-
-
-vc = None

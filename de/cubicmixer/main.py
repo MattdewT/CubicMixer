@@ -32,7 +32,7 @@ import os
 import sys
 
 
-def dice_loop(namespace, mixer_, library, valve_controller):
+def dice_loop(namespace, mixer_, library):
 
     """dice_loop
 
@@ -42,7 +42,6 @@ def dice_loop(namespace, mixer_, library, valve_controller):
     :param namespace: shared variable namespace to pass different parameters between subthreads
     :param mixer_: mixer instance to executed recipe scripts
     :param library: library instance that holds all loaded recipes and ingredients
-    :param valve_controller: valve_controller instance to open valves
     """
 
     cube_changed = False
@@ -64,7 +63,9 @@ def dice_loop(namespace, mixer_, library, valve_controller):
             print namespace.dice_data.orientation, namespace.dice_data.is_not_rolling, str(dice_roll_number)
             namespace.em.call_event("dice_rolled", 1, dice_roll_number)
 
-            valve_controller.open_valves(mixer_.handle_dice_roll(dice_roll_number, namespace.mix_by_recipes, library))
+            vc = namespace.vc
+            vc.open_valves(mixer_.handle_dice_roll(dice_roll_number, namespace.mix_by_recipes, library))
+            namespace.vc = vc
 
 
 def ui_loop(namespace, ui):
@@ -109,16 +110,14 @@ if __name__ == "__main__":
         elif args == 'k':
             ns.keyboard_input = True
 
-    # --------------------------------------------- setup event manager -----------------------------------------------------
-
-    ns.em = utility.EventManger()
-
     # --------------------------------- hardware setup ------------------------------------
     
     hardware.IO.setup_gpio_configuration()
-    display = hardware.Display.Display()                                            # generate display instance
-    hardware.Display.write_display = display.write_display_fct                      # look up /hardware/Display.py for further explanation
+    hardware.Display.Display()                                            # generate display instance
 
+    # --------------------------------------------- setup event manager -----------------------------------------------------
+
+    ns.em = utility.EventManger()
     ns.em.call_event("start_up", 1)
     
     # --------------------------------- load and check scripts ------------------------------------
@@ -147,13 +146,13 @@ if __name__ == "__main__":
     # --------------------------------- setup mixer and valve controller ------------------------------------
 
     mixer = Mixer(scripts.library)
-    hardware.ValveMaster.vc = hardware.ValveMaster.setup_valve_controller()
+    ns.vc = hardware.ValveMaster.setup_valve_controller()
 
     # --------------------------------- setup UI ------------------------------------
 
     print Diagnostic.separator_str
 
-    UI_ = utility.UI.UserInterface(utility.UI.Config(ns, hardware.ValveMaster.vc, scripts.library, mixer))
+    UI_ = utility.UI.UserInterface(utility.UI.Config(ns, scripts.library, mixer))
 
     UI_.UITree.print_tree()
 
@@ -185,7 +184,7 @@ if __name__ == "__main__":
 
     # ---------------------------------  start main threads and loops ------------------------------------
 
-    d = Process(target=dice_loop, args=(ns, mixer, scripts.library, hardware.ValveMaster.vc))
+    d = Process(target=dice_loop, args=(ns, mixer, scripts.library))
     d.start()                                                                                   # start dice loop
 
     ui_loop(ns, UI_)                                                                            # start ui loop

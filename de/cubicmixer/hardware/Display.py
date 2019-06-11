@@ -11,12 +11,14 @@ class Display:
     Display class serves the purpose, to initialise the hardware and handle writing to the lcd. The primary goal was to
     make the display threading safe.
     """
-    
+
+    lock_ = Lock()
+
     def __init__(self):
-        self.lock_ = Lock()
         self.setup()
 
-    def write_display_fct(self, msg):        
+    @staticmethod
+    def write_display_fct(msg):
         """
         
         :param msg: needs to be a list, with two entries in String format, the first entry represents the first line of 
@@ -28,12 +30,12 @@ class Display:
         print Diagnostic.display_str + msg[0] + Diagnostic.bcolors.ENDC
         print Diagnostic.display_str + msg[1] + Diagnostic.bcolors.ENDC
     
-        self.lock_.acquire(True)
+        Display.lock_.acquire(True)
         if not platform.system() == "Windows":
             LCD1602.clear()
             LCD1602.write(0, 0, msg[0])
             LCD1602.write(0, 1, msg[1])
-        self.lock_.release()
+        Display.lock_.release()
     
     @staticmethod
     def setup():
@@ -44,7 +46,7 @@ class Display:
             time.sleep(2)
 
 
-write_display = None  # type: Display().write_display_fct()
+write_display = Display.write_display_fct  # type: Display().write_display_fct()
 """
 write_display is used as an static reference, so it can be called from every position in the script
 """
