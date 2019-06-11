@@ -65,7 +65,7 @@ def dice_loop(namespace, mixer_, library):
 
             vc = namespace.vc
             vc.open_valves(mixer_.handle_dice_roll(dice_roll_number, namespace.mix_by_recipes, library))
-            namespace.vc = vc
+            namespace.vc = vc                                                                               # update namespace instant
 
 
 def ui_loop(namespace, ui):
