@@ -1,9 +1,18 @@
 
+'''
+Diagnostics provides customs errors, often used debug string and color strings. It also keeps track of the loading and
+parsing progress and success of scripts.
+'''
+
 
 # ---------------------------------------------------- custom error ----------------------------------------------------
 
 
 class FileError(Exception):
+
+    '''
+    This error raises, when the script type cant be defined as ingredient or recipe (is or rs in script)
+    '''
 
     def __init__(self, value):
         self.value = value
@@ -14,6 +23,11 @@ class FileError(Exception):
 
 class RecipeError(Exception):
 
+    '''
+    This error raises, when the recipe has no syntax errors, but has semantics errors. These is often caused, by typos
+    or not loaded ingredients.
+    '''
+
     def __init__(self, value):
         self.value = value
 
@@ -22,6 +36,10 @@ class RecipeError(Exception):
 
 
 class InvalidSyntax(Exception):
+
+    '''
+    This errors raises, when the syntax is invalid.
+    '''
 
     def __init__(self, position):
         self.position = position
@@ -34,6 +52,11 @@ class InvalidSyntax(Exception):
 
 
 class bcolors:
+
+    '''
+    Standard ansi color strings, to simplify debug messaging.
+    '''
+
     HEADER = '\033[95m'
     OKBLUE = '\033[94m'
     OKGREEN = '\033[92m'
