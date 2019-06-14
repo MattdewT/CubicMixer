@@ -20,7 +20,7 @@ class Display:
     @staticmethod
     def write_display_fct(msg):
         """
-        
+        Writes the passed message to a LCD screen.
         :param msg: needs to be a list, with two entries in String format, the first entry represents the first line of 
                     the display and the second the second ine of the display
         :raises a warning when the message is longer than the display can show (16 characters per line)

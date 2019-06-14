@@ -5,6 +5,10 @@ import utility
 
 class EventManger:
 
+    '''
+    The EventManger gives a central point, to notify the user about (unwanted) events.
+    '''
+
     def __init__(self):
         pass
 
