@@ -58,7 +58,7 @@ class Tank:
         """
         height_outside_liquid = self.high_of_the_pipe - self.get_height_of_liquid()
         pipe_volume = height_outside_liquid * (0.5 * self.pipe_diameter) ** 2 * 3.14159265359
-        return pipe_volume
+        return pipe_volume * 0.001
 
 
 class Valve(ValveInterface):
@@ -74,11 +74,9 @@ class Valve(ValveInterface):
         :param pin: gpio pin number
         :param pump_factor: volume / time
         """
-        self.position = position
-        self.pin = pin
-        self.container = Tank(400, (0.5 * 67 - 5) ** 2 * 3.14159265359, position, 6)        # generate tank similar to used ones
         self.pump_factor = pump_factor
         IO.set_pinmode(pin, "out")
+        IO.set_pin(pin, "LOW")
 
     def open(self, volume):
         """
@@ -95,7 +93,9 @@ class Valve(ValveInterface):
         :param volume: volume to dispense
         """
         IO.set_pin(self.pin, "HIGH")
-        time.sleep(1)
+        print "volume:", volume
+        print "time:", volume  / self.pump_factor
+        time.sleep(volume  / self.pump_factor)
         IO.set_pin(self.pin, "LOW")
 
     @property

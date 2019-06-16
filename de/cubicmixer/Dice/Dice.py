@@ -224,8 +224,8 @@ def setup_wireless_connection(ns):
     ip = None
     cube_connected = False
 
-    wlan_ssid = "dew"                                                           # wlan ssid
-    wlan_password = "dew"                                                       # wlan password
+    wlan_ssid = "CubeNet"                                                           # wlan ssid
+    wlan_password = "CubicMixer"                                                       # wlan password
 
     ser = get_serial_connection(ns)                                             # setup the serial communication
 
