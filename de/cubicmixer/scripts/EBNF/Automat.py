@@ -2,21 +2,40 @@ from State import State
 from Transition import Transition
 from utility.Diagnostic import InvalidSyntax
 
+"""
+Automat checks the scripts for syntax errors.
+"""
+
 
 class Automat:
+
+    """
+    Automat uses a finite deterministic automaton to check syntax of any given script
+    """
+
     def __init__(self):
         self.currentState = 1
-        self.states = {-1: State(-1, False)}
+        self.states = {-1: State(-1, False)}                # add error state
 
     def add_state(self, e):
+        """
+        Add state to automat
+        :param e: state to add
+        """
         self.states[e.get_state_number()] = e
 
     def check_string(self, text):
-        text_char = list(text)
+        """
+        Checks syntax of any given script.
+        :param text: script as single line string with \n as line separator
+        :return: True, if the syntax check was successful, False if it was not
+        :raises InvalidSyntax error
+        """
+        text_char = list(text)                                              # convert to iterable
         for i in range(len(text_char)):
             c = text_char[i]
 
-            self.currentState = self.states[self.currentState].check(c)
+            self.currentState = self.states[self.currentState].check(c)     # check for transitions
 
             if self.currentState == -1:
                 raise InvalidSyntax(i)
@@ -24,20 +43,29 @@ class Automat:
         if self.currentState == -1:
             return False
         else:
-            return self.states[self.currentState].is_final_state()
+            return self.states[self.currentState].is_final_state()          # if current state is authorized end condition
 
 
 def check_syntax(text, a):
-    a.currentState = 1
+    """
+    Wrapper function for the syntax checking
+    :param text: string to check
+    :param a: automat for syntax checking
+    :raises InvalidSyntax error
+    """
+    a.currentState = 1                                                      # reset current state
     print text
-    result = a.check_string(text)
+    result = a.check_string(text)                                           # check syntax
     print result
     if not result:
         raise InvalidSyntax(-1)
 
 
 def setup_automat():
-
+    """
+    Setups the complete finite deterministic automaton for syntax checking of the recipe and ingredient scripts.
+    :return: finished automat with all states and transitions added
+    """
     a = Automat()
 
     s = State(1, False)                                                                                                 # State 1
