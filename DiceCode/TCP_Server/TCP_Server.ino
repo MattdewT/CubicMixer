@@ -41,7 +41,7 @@ void setup() {
   
   Serial.println();
 
-  delay(1000);
+  delay(2000);
   
   Serial.println("SSID");
   boolean ssid_fetched = false;
