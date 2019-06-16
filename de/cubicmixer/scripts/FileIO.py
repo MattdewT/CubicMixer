@@ -7,6 +7,10 @@ is_list = []
 rs_list = []
 
 
+"""
+The FileIO module handles the loading and parsing of ingredient and recipes scripts.
+"""
+
 # ------------------------------------------------- script loading -----------------------------------------------------
 
 
