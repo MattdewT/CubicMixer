@@ -63,9 +63,19 @@ def dice_loop(namespace, mixer_, library):
             print namespace.dice_data.orientation, namespace.dice_data.is_not_rolling, str(dice_roll_number)
             namespace.em.call_event("dice_rolled", 1, dice_roll_number)
 
-            vc = namespace.vc
-            vc.open_valves(mixer_.handle_dice_roll(dice_roll_number, namespace.mix_by_recipes, library))
-            namespace.vc = vc                                                                               # update namespace instant
+            namespace.event_state = "mix_request"
+            namespace.em.call_event("mix_request", 1, library.recipes_list[mixer_.chose_recipe(dice_roll_number, library)])
+
+            while not namespace.pending_user_input_received:
+                pass
+            namespace.pending_user_input_received = False
+            mix_request = namespace.pending_user_input_result
+            namespace.event_state = "standard"
+
+            if mix_request:
+                vc = namespace.vc
+                vc.open_valves(mixer_.handle_dice_roll(dice_roll_number, namespace.mix_by_recipes, library))
+                namespace.vc = vc                                                                               # update namespace instant
 
 
 def ui_loop(namespace, ui):
@@ -107,8 +117,13 @@ if __name__ == "__main__":
     for args in sys.argv:
         if args == 'd':
             ns.emulate_dice = True
+            print Diagnostic.warning_str + "Dice simulation enabled, use keys 1 to 6 to simulate dice input" + Diagnostic.bcolors.ENDC
         elif args == 'k':
             ns.keyboard_input = True
+            print Diagnostic.warning_str + "Keyboard input enabled, use w=enter, s=back, a=left, d=right as button inputs" + Diagnostic.bcolors.ENDC
+
+        if not ns.keyboard_input and ns.emulate_dice:
+            print Diagnostic.error_str + "Keyboard input must be enabled for dice simulation" + Diagnostic.bcolors.ENDC
 
     # --------------------------------- hardware setup ------------------------------------
     
@@ -117,7 +132,7 @@ if __name__ == "__main__":
 
     # --------------------------------------------- setup event manager -----------------------------------------------------
 
-    ns.em = utility.EventManger()
+    ns.em = utility.EventManger(ns)
     ns.em.call_event("start_up", 1)
     
     # --------------------------------- load and check scripts ------------------------------------

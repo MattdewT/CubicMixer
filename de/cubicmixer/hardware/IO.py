@@ -15,6 +15,12 @@ be used by the user in the custom valve module.
 '''
 
 
+pin_back = 17
+pin_enter = 18
+pin_left = 19
+pin_right = 20
+
+
 def setup(ns, ui):
 
     '''
@@ -51,15 +57,15 @@ def setup_buttons(ns, ui):
 
     callback_lambda = ns.em.return_lambda_namespace_callback(ns, ui)        # callback lambda from event manger
     
-    GPIO.setup(17, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(18, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(19, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-    GPIO.setup(20, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(pin_back, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(pin_enter, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(pin_left, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+    GPIO.setup(pin_right, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     
-    GPIO.add_event_detect(17, GPIO.RISING, callback=callback_lambda, bouncetime=250)
-    GPIO.add_event_detect(18, GPIO.RISING, callback=callback_lambda, bouncetime=250)
-    GPIO.add_event_detect(19, GPIO.RISING, callback=callback_lambda, bouncetime=250)
-    GPIO.add_event_detect(20, GPIO.RISING, callback=callback_lambda, bouncetime=250)
+    GPIO.add_event_detect(pin_back, GPIO.RISING, callback=callback_lambda, bouncetime=250)
+    GPIO.add_event_detect(pin_enter, GPIO.RISING, callback=callback_lambda, bouncetime=250)
+    GPIO.add_event_detect(pin_left, GPIO.RISING, callback=callback_lambda, bouncetime=250)
+    GPIO.add_event_detect(pin_right, GPIO.RISING, callback=callback_lambda, bouncetime=250)
 
 
 def clean_up():

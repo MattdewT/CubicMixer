@@ -259,13 +259,13 @@ def update_keyboard(ui_interface, namespace):
 
     char = raw_input("input")
     if char == 'w':
-        ui_interface.enter()
+        namespace.em.handle_event_button_pressed(namespace, ui_interface, hardware.IO.pin_enter)
     elif char == 'a':
-        ui_interface.switch_left()
+        namespace.em.handle_event_button_pressed(namespace, ui_interface, hardware.IO.pin_left)
     elif char == 's':
-        ui_interface.back()
+        namespace.em.handle_event_button_pressed(namespace, ui_interface, hardware.IO.pin_back)
     elif char == 'd':
-        ui_interface.switch_right()
+        namespace.em.handle_event_button_pressed(namespace, ui_interface, hardware.IO.pin_right)
     elif char == '1' and namespace.emulate_dice:
         trigger_dice_loop(namespace)
         namespace.dice_data = DiceData([-1, 0, 0], True)
@@ -290,13 +290,13 @@ def update_keyboard(ui_interface, namespace):
 
 
 def update_buttons(ui_interface, channel):
-    if channel == 17:
+    if channel == hardware.IO.pin_enter:
         ui_interface.enter()
-    elif channel == 18:
+    elif channel == hardware.IO.pin_left:
         ui_interface.switch_left()
-    elif channel == 19:
+    elif channel == hardware.IO.pin_back:
         ui_interface.back()
-    elif channel == 20:
+    elif channel == hardware.IO.pin_right:
         ui_interface.switch_right()
     else:
         print "Error parsing button input"

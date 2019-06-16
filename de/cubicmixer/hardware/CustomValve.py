@@ -54,7 +54,7 @@ class Valve(ValveInterface):
 
 
 def setup_valve():
-    valves =[Valve(1, 5, ),
+    valves =[Valve(1, 5),
              Valve(2, 6),
              Valve(3, 13),
              Valve(4, 26)]
