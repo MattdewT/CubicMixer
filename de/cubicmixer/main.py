@@ -51,26 +51,30 @@ def dice_loop(namespace, mixer_, library):
         # -------------------------------------------- slow down dice loop ---------------------------------------------
         time.sleep(0.2)
         # ------------------------------------------- get dice rolls ---------------------------------------------------
-        if not namespace.dice_data.is_not_rolling:
+        if not namespace.dice_data.is_not_rolling:                                                          # notify about moving dice
             cube_changed = True
             namespace.em.call_event("dice_rolling", 1)
 
-        if cube_changed and namespace.dice_data.is_not_rolling:
+        if cube_changed and namespace.dice_data.is_not_rolling:                                             # handle new dice throw
             cube_changed = False
 
-            dice_roll_number = Dice.convert_to_dice_numbers(namespace.dice_data.orientation)
+            dice_roll_number = Dice.convert_to_dice_numbers(namespace.dice_data.orientation)                # fetch dice side
 
-            print namespace.dice_data.orientation, namespace.dice_data.is_not_rolling, str(dice_roll_number)
-            namespace.em.call_event("dice_rolled", 1, dice_roll_number)
+            print namespace.dice_data.orientation, namespace.dice_data.is_not_rolling, str(dice_roll_number)    # debug messaging about dice status
+            namespace.em.call_event("dice_rolled", 1, dice_roll_number)                                     # notify about dice roll result
+
+            # --------------------------------------------- fetch confirmation from user -------------------------------
 
             namespace.event_state = "mix_request"
             namespace.em.call_event("mix_request", 1, library.recipes_list[mixer_.chose_recipe(dice_roll_number, library)])
 
-            while not namespace.pending_user_input_received:
+            while not namespace.pending_user_input_received:                                                # wait for user input
                 pass
             namespace.pending_user_input_received = False
-            mix_request = namespace.pending_user_input_result
+            mix_request = namespace.pending_user_input_result                                               # fetch user input
             namespace.event_state = "standard"
+
+            # ------------------------------------------- mixing recipe ------------------------------------------------
 
             if mix_request:
                 vc = namespace.vc
