@@ -173,20 +173,9 @@ class UserInterface:
         for position in self.config.ns.vc.valve_dict:
             self.UITree.add_node(LeafNode([str(position), ""], self.config.test_valve_by_position, position))
 
-        self.UITree.add_node_to_root(Node(["Dice", ""], False))     # ToDo rework Dice UI				# Initialising Menu Dice
-
-        self.UITree.go_to_root()
-        self.UITree.descend(3)
-
-        self.UITree.add_node(Node(["Connection", "Status"], False))                                     # Initialising Submenu Connection Status
-
-        self.UITree.descend(0)
-        self.UITree.add_node(LeafNode(["Status", ""], self.config.stuff))                               # CS Status
-        self.UITree.add_node(LeafNode(["Ping", ""], self.config.stuff))                                 # CS Ping
-
         self.UITree.add_node_to_root(Node(["Chose Drink", ""], False))									# Initialising Menu Chose Drink
         self.UITree.go_to_root()
-        self.UITree.descend(4)
+        self.UITree.descend(3)
         for recipe in scripts.library.recipes_list:
             self.UITree.add_node(LeafNode([recipe.name, ""], self.config.mix_drink, recipe))
 
@@ -243,12 +232,6 @@ class Config:
     @staticmethod
     def nothing():
         pass
-
-    # ToDo: Remove function
-    @staticmethod
-    def stuff():
-        print Diagnostic.error_str + "please change function" + Diagnostic.bcolors.ENDC
-        hardware.Display.write_display(["not defined yet", "please fix"])
 
 
 def update_keyboard(ui_interface, namespace):

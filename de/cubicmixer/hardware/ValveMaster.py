@@ -41,7 +41,7 @@ class ValveController:
         :param valve_to_add: the valve to add
         '''
 
-        self.valve_dict[valve_to_add.get_position()] = valve_to_add
+        self.valve_dict[valve_to_add.get_position] = valve_to_add
 
     def open_valves(self, order_dict):
 

@@ -75,7 +75,7 @@ class Valve(ValveInterface):
         """
         self.position = position
         self.pin = pin
-        self.container = Tank(400, 100000 / 33, position, 6)
+        self.container = Tank(400, 100000 / 33, position, 6, 330)
         self.pump_factor = pump_factor
         IO.set_pinmode(pin, "out")
         IO.set_pin(pin, "LOW")
