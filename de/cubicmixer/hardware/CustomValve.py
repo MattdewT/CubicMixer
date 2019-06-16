@@ -67,13 +67,15 @@ class Valve(ValveInterface):
     The Valve class defines the algorithm for operating the valves.
     '''
 
-    def __init__(self, position, pin, pump_factor=1):
+    def __init__(self, position, pin, pump_factor=400 / 11):
         """
-
         :param position: virtual position in database
         :param pin: gpio pin number
         :param pump_factor: volume / time
         """
+        self.position = position
+        self.pin = pin
+        self.container = Tank(400, 100000 / 33, position, 6)
         self.pump_factor = pump_factor
         IO.set_pinmode(pin, "out")
         IO.set_pin(pin, "LOW")
