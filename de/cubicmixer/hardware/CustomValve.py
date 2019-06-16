@@ -21,9 +21,9 @@ class Tank:
         return height
 
     def compensate_pipe(self):
-        height_outside_liquid = 500 - self.get_height_of_liquid()
+        height_outside_liquid = 340 - self.get_height_of_liquid()
         pipe_volume = height_outside_liquid * (0.5 * self.pipe_diameter) ** 2 * 3.14159265359
-        return pipe_volume
+        return pipe_volume * 0.001
 
 
 '''Every Valve class need to define get_postion functions that returns the valve position
@@ -32,12 +32,13 @@ as int and an open(float) function'''
 
 class Valve(ValveInterface):
 
-    def __init__(self, position, pin, pump_factor=1):
+    def __init__(self, position, pin, pump_factor=400/11):
         self.position = position
         self.pin = pin
-        self.container = Tank(400, (0.5 * 67 - 5) ** 2 * 3.14159265359, position, 6)
+        self.container = Tank(400, 100000 / 33 , position, 6)
         self.pump_factor = pump_factor
         IO.set_pinmode(pin, "out")
+        IO.set_pin(pin, "LOW")
 
     def open(self, volume):
         volume_to_dispense = volume + self.container.compensate_pipe()
@@ -46,7 +47,9 @@ class Valve(ValveInterface):
 
     def dispense_volume(self, volume):
         IO.set_pin(self.pin, "HIGH")
-        time.sleep(1)
+        print "volume:", volume
+        print "time:", volume  / self.pump_factor
+        time.sleep(volume  / self.pump_factor)
         IO.set_pin(self.pin, "LOW")
 
     def get_position(self):

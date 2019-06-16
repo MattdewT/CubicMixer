@@ -17,8 +17,8 @@ be used by the user in the custom valve module.
 
 pin_back = 17
 pin_enter = 18
-pin_left = 19
-pin_right = 20
+pin_left = 27
+pin_right = 22
 
 
 def setup(ns, ui):
@@ -62,10 +62,10 @@ def setup_buttons(ns, ui):
     GPIO.setup(pin_left, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     GPIO.setup(pin_right, GPIO.IN, pull_up_down=GPIO.PUD_UP)
     
-    GPIO.add_event_detect(pin_back, GPIO.RISING, callback=callback_lambda, bouncetime=250)
-    GPIO.add_event_detect(pin_enter, GPIO.RISING, callback=callback_lambda, bouncetime=250)
-    GPIO.add_event_detect(pin_left, GPIO.RISING, callback=callback_lambda, bouncetime=250)
-    GPIO.add_event_detect(pin_right, GPIO.RISING, callback=callback_lambda, bouncetime=250)
+    GPIO.add_event_detect(pin_back, GPIO.FALLING, callback=callback_lambda, bouncetime=500)
+    GPIO.add_event_detect(pin_enter, GPIO.FALLING, callback=callback_lambda, bouncetime=500)
+    GPIO.add_event_detect(pin_left, GPIO.FALLING, callback=callback_lambda, bouncetime=500)
+    GPIO.add_event_detect(pin_right, GPIO.FALLING, callback=callback_lambda, bouncetime=500)
 
 
 def clean_up():
