@@ -27,6 +27,9 @@ OS compatibility
     Run parameters "k" and "d" are recommended, to test the script without any hardware on a windows system.
     Running on a linux system, may not work, because the script will try to load and start all gpio hardware, when
     running on a linux system.
+
+    This script uses ansi colour codes to signal different kinds of messages. If the output console doesnt support ansi
+    colour coding, weird characters may show up.
 """
 
 import scripts
