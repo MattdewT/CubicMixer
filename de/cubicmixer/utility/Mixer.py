@@ -22,7 +22,8 @@ class Mixer:
 
     def handle_dice_roll(self, dice_roll, mix_by_recipes, library):
         """handle_dice_roll
-        handle_dice_roll is the central point, where a recipe is chosen and the valve volume dictionary is generated
+        handle_dice_roll is the central point, where a recipe is chosen and the valve volume dictionary is generated, or
+        a ingredient based on the operation mode.
         :param mix_by_recipes: boolean to determine the operation mode
         :param library: library with all loaded recipes and ingredients
         :param dice_roll: integer between 1 to 6 that represent the dice roll

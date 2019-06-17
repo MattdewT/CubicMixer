@@ -6,6 +6,10 @@ Project description:
     and executed. Those scripts uses an own programming language to parse and compile recipes and ingredients. This
     enable a simple extension of the mixer capabilities without changing to python source code.
 
+Project dependencies:
+    PySerial 3.4
+    https://pypi.org/project/pyserial/
+
 Main module description:
     The main module initialises the script and starts all subthreads. Important files with the key functuality for the
     mixing are: "/Dice/Dice.py", "/hardware/CustomValves.py", "/hardware/ValveMaster.py" and "/utility/Mixer.py"
@@ -17,6 +21,11 @@ Run parameters
     k:  Enables keyboard input to simulate button inputs
         a = Left, d = Right, w = Enter, s = Back
     d:  Enables dice simulation with the keys 1 to 6. Keyboard input have to be activated for this to work.
+
+OS compatibility
+    Run parameters "k" and "d" are recommended, to test the script without any hardware on a windows system.
+    Running on a linux system, may not work, because the script will try to load and start all gpio hardware, when
+    running on a linux system.
 """
 
 import scripts
