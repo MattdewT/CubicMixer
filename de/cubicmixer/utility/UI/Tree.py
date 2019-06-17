@@ -106,6 +106,7 @@ class LeafNode:
         self.enter_function = enter_function
         self.args_ = False
         if args:
+            self.args_ = True
             self.args = args
 
     def print_node(self, depth):
