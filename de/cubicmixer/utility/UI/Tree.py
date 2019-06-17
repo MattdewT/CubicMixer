@@ -52,7 +52,7 @@ class Node:
 
     def __init__(self, msg, hidden):
         """
-        :param msg: Display message
+        :param msg: Display message on the lcd, when it is the current active node
         :param hidden: if the node is hidden in the short menu
         """
         self.child_list = []
