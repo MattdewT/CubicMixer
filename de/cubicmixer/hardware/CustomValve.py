@@ -48,7 +48,7 @@ class Tank:
         Calculates the high of the liquid inside the container
         :return: the high of the liquid inside the container
         """
-        height = self.volume / self.base_area
+        height = (self.volume * 1000) / self.base_area
         return height
 
     def compensate_pipe(self):
@@ -57,6 +57,7 @@ class Tank:
         :return: the volume of the dispense pipe that needs to be compensated
         """
         height_outside_liquid = self.high_of_the_pipe - self.get_height_of_liquid()
+        print "height:", height_outside_liquid
         pipe_volume = height_outside_liquid * (0.5 * self.pipe_diameter) ** 2 * 3.14159265359
         return pipe_volume * 0.001
 
