@@ -7,8 +7,9 @@ Project description:
     enable a simple extension of the mixer capabilities without changing to python source code.
 
 Project dependencies:
-    PySerial 3.4
-    https://pypi.org/project/pyserial/
+    Following packages need to be installed to run the script
+        PySerial 3.4
+        https://pypi.org/project/pyserial/
 
 Main module description:
     The main module initialises the script and starts all subthreads. Important files with the key functuality for the
