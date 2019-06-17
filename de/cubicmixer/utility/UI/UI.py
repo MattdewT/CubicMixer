@@ -207,7 +207,7 @@ class UserInterface:
         self.UITree.go_to_root()
         self.UITree.descend(2)
 
-        self.UITree.add_node(LeafNode(["shutdown", "script"], self.config.stop_program()))								# Maintenance reboot
+        self.UITree.add_node(LeafNode(["shutdown", "script"], self.config.stop_program))								# Maintenance reboot
         self.UITree.add_node(Node(["test valves", ""], False))											# Initialising Submenu test valves
 
         self.UITree.descend(1)
